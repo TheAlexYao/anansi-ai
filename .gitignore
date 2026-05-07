@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+
+node_modules/
+.next/
+out/
+dist/
+build/
+
+.DS_Store
+*.log
+
+data/runway/*
+!data/runway/.gitkeep
+public/generated/runway/*
+!public/generated/runway/.gitkeep
