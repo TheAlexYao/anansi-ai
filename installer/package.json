@@ -1,5 +1,5 @@
 {
-  "name": "anansi",
+  "name": "anansi-ai",
   "version": "0.1.0",
   "description": "The visual storytelling agent for Runway. Composes Runway's API into a creative-director pipeline across Claude Code, Hermes, OpenClaw, and Codex.",
   "license": "MIT",

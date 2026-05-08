@@ -7,7 +7,7 @@ Bring your brief. Bring your moodboard. Get a 30-second cinematic film stakehold
 Anansi installs as one command. You get the workbench, the agent skills, and a starter project — ready to run on Claude Code, Hermes, OpenClaw, or Codex.
 
 ```bash
-npx anansi connect
+npx anansi-ai connect
 ```
 
 The agent shows up in your CLI. The workbench opens in your browser. A starter project is pre-loaded. No keys needed to explore.
@@ -56,7 +56,7 @@ You write the brief. The agents weave the rest. You pick the directions, you cho
 ## Quick start
 
 ```bash
-npx anansi connect
+npx anansi-ai connect
 ```
 
 The installer:

@@ -70,6 +70,6 @@ Flags:
   --help, -h      This message
 
 Docs:    https://github.com/TheAlexYao/anansi-ai
-Install: npx anansi connect
+Install: npx anansi-ai connect
 `);
 }

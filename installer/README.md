@@ -1,6 +1,6 @@
 # anansi (installer)
 
-The CLI behind `npx anansi connect`.
+The CLI behind `npx anansi-ai connect`.
 
 ## What it does
 
@@ -23,7 +23,7 @@ All five Anansi skills become available to whichever runtime you already use.
 ## Install
 
 ```bash
-npx anansi connect
+npx anansi-ai connect
 ```
 
 That's it. Twenty seconds. No keys required to explore.
