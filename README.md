@@ -1,22 +1,169 @@
-# Anansi AI
+# Anansi
 
-Anansi is a creative producer workspace for AI video. It turns a brand or product brief into creative directions, shot options, Runway prompts, an approval flow, and generated demo assets.
+**The visual storytelling agent for Runway.**
 
-## Local Development
+Bring your brief. Bring your moodboard. Get a 30-second cinematic film stakeholders, customers, and investors will actually believe in.
+
+Anansi installs as one command. You get the workbench, the agent skills, and a starter project — ready to run on Claude Code, Hermes, OpenClaw, or Codex.
 
 ```bash
-npm install
-npm run dev
+npx anansi connect
 ```
 
-## Project Layout
+The agent shows up in your CLI. The workbench opens in your browser. A starter project is pre-loaded. No keys needed to explore.
 
-- `app/` - Next.js frontend.
-- `agent/` - portable Anansi agent profile and demo workflow.
-- `docs/` - setup notes, architecture, and demo script.
-- `data/runway/` - local Runway task metadata. Private by default.
-- `public/generated/runway/` - generated media used by the frontend. Private by default until approved.
+---
 
-## Privacy
+## What it does
 
-Do not commit API keys, raw Runway task logs, private Granola transcripts, Jarvis/Hermes personal profile files, or private creative-system docs.
+Turns a brief into a film, with you in the loop.
+
+```
+              ┌────────────────────────┐
+              │        BRIEF           │
+              │  product · feeling     │
+              │  references · audience │
+              └────────────┬───────────┘
+                           │
+           ┌───────────────┴───────────────┐
+           ▼                               ▼
+ ┌──────────────────┐             ┌──────────────────┐
+ │   MOOD WEAVER    │             │   STORY WEAVER   │
+ │  palette · stills│ ◄─────────► │   3 directions   │
+ │  reference board │             │   tone · pacing  │
+ └────────┬─────────┘             └────────┬─────────┘
+          │                                │
+          └────────────┬───────────────────┘
+                       ▼
+            ┌──────────────────────┐
+            │    SCENE WEAVER      │
+            │ 3 scenes × 2 options │  ◄── pick 1 per scene
+            └──────────┬───────────┘
+                       ▼
+            ┌──────────────────────┐
+            │    RUNWAY RENDER     │
+            │   queue · variants   │
+            └──────────┬───────────┘
+                       ▼
+            ┌──────────────────────┐
+            │      FINAL CUT       │
+            │  30s · 16:9 or 9:16  │
+            └──────────────────────┘
+```
+
+You write the brief. The agents weave the rest. You pick the directions, you choose the scenes, you ship the cut.
+
+## Quick start
+
+```bash
+npx anansi connect
+```
+
+The installer:
+
+1. Detects your agent runtimes (Claude Code, Hermes, OpenClaw, Codex)
+2. Installs the five Anansi skills as universal markdown profiles
+3. Downloads the starter project bundle — moodboard, scene options, final video
+4. Spins up the workbench at `http://localhost:3002`
+5. Opens your browser to a project that's already loaded
+
+No API keys required to install or explore. Bring your Runway key only when you want to generate something new.
+
+## What you get
+
+**The workbench** — a Next.js app at `localhost:3002`. Brief on the left, mood up top, story weaver on the right, scenes below, final cut bottom-right. Looks like a creative-director dashboard, not a SaaS tool.
+
+**Five agent skills** — markdown profiles that drop into any agent runtime supporting the Skills convention:
+
+```
+~/.agents/skills/anansi-brief
+~/.agents/skills/anansi-mood-weaver
+~/.agents/skills/anansi-story-weaver
+~/.agents/skills/anansi-scene-weaver
+~/.agents/skills/anansi-runway-render
+```
+
+Symlinked into Claude Code, Hermes, OpenClaw, Codex — whichever runtimes are on your machine. Open your agent and it already knows how to weave a film.
+
+**A starter project** — a real fundraising film built for [Hinter](https://hinter.com). Moodboard, three directions, six scene options, final 30-second cut — all pre-rendered. Open the workbench and it's there. Use it as a reference, fork it, or replace it with your own.
+
+## How it works
+
+Five agents, one workflow:
+
+1. **Brief.** You write it. The agent ingests product, audience, feeling, references.
+2. **Mood Weaver.** Pulls your references, builds a palette, lays out a visual world.
+3. **Story Weaver.** Reads brief and mood, returns three cinematic directions you choose between.
+4. **Scene Weaver.** Translates your direction into three scenes, each with two shot options. You pick one per scene.
+5. **Runway Render.** Sends the prompts to Runway, queues the variants, assembles the final cut.
+
+You stay in the loop at three points: direction, scene options, final approval. Anansi never picks for you.
+
+## Glossary
+
+| Term | Means |
+|---|---|
+| Brief | What you're making, who it's for |
+| Mood | The visual world — palette, references, feeling |
+| Direction | One creative interpretation of the brief (three to choose from) |
+| Scene | One moment in the film (three per film) |
+| Option | An alternate version of a scene (two per scene) |
+| Final cut | The assembled 30-second video — 16:9 for stakeholders, 9:16 for social |
+
+## Three ways to use it
+
+**From the workbench.** Open `http://localhost:3002`. Click around. Visual, deliberate, made for taste.
+
+**From the CLI.**
+
+```bash
+anansi run my-brief.md
+```
+
+Reads a brief, runs the workflow non-interactively, writes a draft project to `~/anansi/projects/`. Open the workbench to refine.
+
+**From your agent.** Open Claude Code, Hermes, OpenClaw, or Codex. Ask:
+
+> Use the Anansi skill to start a new project. Brief: a 30-second film for a sustainable hospitality brand opening their second property.
+
+Your agent has the skills loaded. It runs the workflow. You watch it weave.
+
+## Bring your own keys
+
+Anansi runs on **your** Runway API key. We never proxy your traffic. Your renders live in your account. Your bill is your bill.
+
+```bash
+anansi config set runway_key rw_xxx
+```
+
+The starter project is pre-rendered, so you can explore Anansi end-to-end without a key. Keys are only required when you generate something new.
+
+## Project layout after install
+
+```
+~/anansi/
+├── projects/
+│   └── hinter-pitch-film/        ← starter project, pre-loaded
+│       ├── brief.md
+│       ├── mood/                  ← reference stills
+│       ├── scenes/                ← shot options
+│       ├── final/hinter-30s.mp4
+│       └── project.json
+├── workbench/                     ← Next.js app
+└── config.json                    ← BYOK config
+```
+
+## Built for the Runway API hackathon
+
+72 hours. May 2026.
+
+Team:
+- **Alex Yao** — frontend, agent integration · [@TheAlexYao](https://github.com/TheAlexYao)
+- **Vio Marin** — creative direction · [@viomarin](https://github.com/viomarin)
+- **Sam Brukhman** — workflow engineering · [@sambrukhman1](https://github.com/sambrukhman1)
+
+First project built with [Hinter](https://hinter.com).
+
+## License
+
+MIT. Use it. Fork it. Ship something beautiful.
