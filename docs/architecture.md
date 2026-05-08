@@ -262,6 +262,6 @@ Every agent reads and writes this object. Workbench renders from it. The CLI pri
 ## Reading order for new contributors
 
 1. [README](../README.md) — what Anansi is and what it ships
-2. [docs/install.md](./install.md) — how `npx anansi connect` lands on a machine
+2. [docs/install.md](./install.md) — how `npx anansi-ai connect` lands on a machine
 3. This file — how the pieces compose at runtime
 4. The five SKILL.md files under `~/.agents/skills/anansi-*` (after install) — the actual prompts each agent runs

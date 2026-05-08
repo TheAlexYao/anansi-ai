@@ -5,7 +5,7 @@ How Anansi installs and what it puts on your machine.
 ## The single command
 
 ```bash
-npx anansi connect
+npx anansi-ai connect
 ```
 
 That's it. Twenty seconds. No API keys required.
@@ -67,7 +67,7 @@ No keys prompted. No accounts created. No tutorial. The first thing you see is a
 └── config.json             ← optional BYOK config
 
 $GOPATH/bin/runway-pp-cli   ← Runway API CLI, generated from OpenAPI spec
-                              (installed by `npx anansi connect`,
+                              (installed by `npx anansi-ai connect`,
                               shared with anyone using Printing Press)
 ```
 
@@ -168,7 +168,7 @@ unzip /tmp/anansi-starter.zip -d ~/anansi/projects/
 ## Updating
 
 ```bash
-npx anansi update
+npx anansi-ai update
 ```
 
 Pulls the latest skills, workbench, and starter bundle. Your projects are untouched.
@@ -176,7 +176,7 @@ Pulls the latest skills, workbench, and starter bundle. Your projects are untouc
 ## Uninstall
 
 ```bash
-npx anansi disconnect
+npx anansi-ai disconnect
 ```
 
 Removes the skills, the workbench, and the CLI. Leaves `~/anansi/projects/` alone unless you pass `--purge`.
@@ -200,7 +200,7 @@ Don't see your runtime? Anansi still installs the universal `~/.agents/skills/` 
 
 **Runway key isn't working.** Run `runway-pp-cli doctor` — it verifies credentials and connectivity end-to-end. Or check the env directly: `echo ${RUNWAYML_API_KEY_AUTH:0:6}…` (prints first 6 chars only).
 
-**Starter bundle download failed.** `npx anansi pull` retries the bundle download independently of the installer.
+**Starter bundle download failed.** `npx anansi-ai pull` retries the bundle download independently of the installer.
 
 **Workbench shows empty state.** Run `anansi open hinter-pitch-film` to load the starter project explicitly.
 
