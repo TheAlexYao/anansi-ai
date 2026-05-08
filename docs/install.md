@@ -18,20 +18,25 @@ That's it. Twenty seconds. No API keys required.
 │      Looks for: ~/.claude  ~/.hermes  ~/.openclaw  ~/.codex  │
 │      Each one found gets the Anansi skills symlinked in.     │
 ├──────────────────────────────────────────────────────────────┤
-│  2.  Install five skills                                     │
+│  2.  Install five Anansi skills                              │
 │      Writes to ~/.agents/skills/anansi-*                     │
 │      Symlinks into every detected runtime.                   │
 ├──────────────────────────────────────────────────────────────┤
-│  3.  Download the starter project                            │
+│  3.  Install runway-pp-cli                                   │
+│      Generated from Runway's OpenAPI spec via Printing Press.│
+│      Goes on $PATH; used by the Runway Render agent.         │
+│      Skipped if already installed.                           │
+├──────────────────────────────────────────────────────────────┤
+│  4.  Download the starter project                            │
 │      ~50MB bundle from latest GitHub release.                │
 │      Extracts to ~/anansi/projects/hinter-pitch-film/        │
 │      Includes brief, moodboard, scene options, final video.  │
 ├──────────────────────────────────────────────────────────────┤
-│  4.  Spin up the workbench                                   │
+│  5.  Spin up the workbench                                   │
 │      Next.js app at http://localhost:3002                    │
 │      Loads the starter project on first open.                │
 ├──────────────────────────────────────────────────────────────┤
-│  5.  Open your browser                                       │
+│  6.  Open your browser                                       │
 │      Lands you on the loaded Hinter project.                 │
 │      Mood weave, scene options, final cut — all visible.     │
 └──────────────────────────────────────────────────────────────┘
@@ -60,6 +65,10 @@ No keys prompted. No accounts created. No tutorial. The first thing you see is a
 │       └── project.json
 ├── cli/anansi              ← `anansi` command on your PATH
 └── config.json             ← optional BYOK config
+
+$GOPATH/bin/runway-pp-cli   ← Runway API CLI, generated from OpenAPI spec
+                              (installed by `npx anansi connect`,
+                              shared with anyone using Printing Press)
 ```
 
 Symlinks fan out from `~/.agents/skills/` into each agent runtime's skills directory. Updating Anansi updates every runtime at once.
@@ -78,7 +87,16 @@ Open `http://localhost:3002`. Click. Everything is in one screen — brief on th
 anansi run brief.md            # run the full workflow on a brief file
 anansi list                    # show your projects
 anansi open hinter-pitch-film  # opens the workbench at this project
-anansi config set runway_key rw_xxx
+anansi config set runwayml_api_key rw_xxx
+```
+
+For direct Runway API calls (debugging, batch operations, custom scripts), Anansi installs `runway-pp-cli` alongside its own binary:
+
+```bash
+runway-pp-cli doctor                                # verify connection
+runway-pp-cli organization list --agent             # check credit balance
+runway-pp-cli image-to-video create --help          # discover any endpoint
+runway-pp-cli which "generate a video from a still" # natural-language → command
 ```
 
 ### 3. Agent (conversational)
@@ -97,16 +115,17 @@ The agent calls the skills in order. The workbench reflects the project state in
 
 The starter project is pre-rendered. You don't need a key to explore.
 
-When you generate a new project or modify a scene, Anansi asks for a Runway key. Stored on your machine, never sent to us.
+When you generate a new project or modify a scene, Anansi asks for a Runway key. Stored on your machine, never sent to us. Anansi uses the same env var name as `runway-pp-cli`:
 
 ```bash
-anansi config set runway_key rw_xxx
+export RUNWAYML_API_KEY_AUTH=rw_xxx
 ```
 
-Or as an environment variable:
+Or via either CLI's config:
 
 ```bash
-export RUNWAY_API_KEY=rw_xxx
+runway-pp-cli auth set-token rw_xxx       # printing-press canonical
+anansi config set runwayml_api_key rw_xxx # equivalent, Anansi-branded
 ```
 
 Optional keys for richer workflows:
@@ -179,7 +198,7 @@ Don't see your runtime? Anansi still installs the universal `~/.agents/skills/` 
 
 **Skills don't appear in my agent.** Restart your agent runtime. Skills are loaded at startup.
 
-**Runway key isn't working.** Check `anansi config get runway_key`. Test directly: `curl -H "Authorization: Bearer $RUNWAY_API_KEY" https://api.runwayml.com/v1/me`.
+**Runway key isn't working.** Run `runway-pp-cli doctor` — it verifies credentials and connectivity end-to-end. Or check the env directly: `echo ${RUNWAYML_API_KEY_AUTH:0:6}…` (prints first 6 chars only).
 
 **Starter bundle download failed.** `npx anansi pull` retries the bundle download independently of the installer.
 
