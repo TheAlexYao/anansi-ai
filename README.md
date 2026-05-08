@@ -133,7 +133,7 @@ Your agent has the skills loaded. It runs the workflow. You watch it weave.
 Anansi runs on **your** Runway API key. We never proxy your traffic. Your renders live in your account. Your bill is your bill.
 
 ```bash
-anansi config set runway_key rw_xxx
+export RUNWAYML_API_KEY_AUTH=rw_xxx
 ```
 
 The starter project is pre-rendered, so you can explore Anansi end-to-end without a key. Keys are only required when you generate something new.
@@ -152,6 +152,18 @@ The starter project is pre-rendered, so you can explore Anansi end-to-end withou
 ├── workbench/                     ← Next.js app
 └── config.json                    ← BYOK config
 ```
+
+## Stack
+
+Anansi is the conductor. It composes existing tools rather than reinventing them.
+
+- **[`runway-pp-cli`](https://github.com/mvanhorn/printing-press-library)** — our Runway API wrapper, generated from Runway's OpenAPI spec via [Printing Press](https://github.com/mvanhorn/cli-printing-press). Every Runway endpoint, agent-mode ergonomics (`--agent --json --select --dry-run`), structured exit codes, first-class Workflow API support. Anansi's Runway Render agent shells out to this binary.
+- **[`runwayml/skills`](https://github.com/runwayml/skills)** — Runway's official agent-skill library. Cited as the canonical execution layer for Runway-aware agents; we compose with it rather than against it.
+- **Hermes / Claude Code / OpenClaw / Codex** — Anansi's five skills install into any agent runtime via the Skills convention.
+- **Modal** *(optional)* — wrap the Runway Render agent as a `@app.function` for parallelizable rendering and a "powered by Modal" deploy story.
+- **Next.js** — the workbench at `localhost:3002`. A UI for the same project state your agent reads and writes.
+
+See [`docs/architecture.md`](docs/architecture.md) for how these compose end-to-end, including the per-stage model routing (`gen4_turbo` for drafts → `gen4.5` for finals) and the Workflow API integration.
 
 ## Built for the Runway API hackathon
 
