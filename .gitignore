@@ -15,3 +15,6 @@ data/runway/*
 !data/runway/.gitkeep
 public/generated/runway/*
 !public/generated/runway/.gitkeep
+
+# codex review artifacts
+.codex-screenshots/
