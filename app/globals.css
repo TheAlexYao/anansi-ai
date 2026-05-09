@@ -293,11 +293,11 @@ svg {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(340px, 0.88fr);
   align-content: start;
-  column-gap: clamp(22px, 3vw, 38px);
-  row-gap: 16px;
+  column-gap: clamp(20px, 2.8vw, 34px);
+  row-gap: 13px;
   width: min(1040px, calc(100vw - 64px));
   min-height: auto;
-  padding: clamp(24px, 2.8vw, 38px);
+  padding: clamp(22px, 2.5vw, 34px);
   border: 1px solid rgba(224, 210, 255, 0.22);
   border-radius: 8px;
   background:
@@ -331,7 +331,7 @@ svg {
 
 .install-label {
   grid-column: 1;
-  margin-top: 8px;
+  margin-top: 4px;
   color: rgba(186, 160, 162, 0.92);
   font-family: var(--font-mono);
   font-size: 12px;
@@ -341,11 +341,11 @@ svg {
 
 .install-card h1 {
   grid-column: 1;
-  max-width: 560px;
+  max-width: 520px;
   color: #fbf8ff;
-  font-size: clamp(44px, 5.1vw, 74px);
+  font-size: clamp(42px, 4.55vw, 66px);
   font-weight: 520;
-  letter-spacing: -0.052em;
+  letter-spacing: -0.05em;
   line-height: 0.94;
 }
 
@@ -357,15 +357,15 @@ svg {
 .install-copy,
 .install-success {
   color: rgba(226, 217, 240, 0.76);
-  font-size: clamp(15px, 1.35vw, 18px);
-  line-height: 1.48;
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.44;
 }
 
 .install-command-wrap {
   grid-column: 1;
   display: grid;
-  gap: 10px;
-  margin-top: 6px;
+  gap: 8px;
+  margin-top: 2px;
 }
 
 .install-command {
@@ -373,8 +373,8 @@ svg {
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
-  min-height: 70px;
-  padding: 9px 9px 9px 20px;
+  min-height: 62px;
+  padding: 8px 8px 8px 18px;
   border: 1px solid rgba(105, 219, 255, 0.3);
   border-radius: 8px;
   background: linear-gradient(90deg, rgba(5, 5, 20, 0.76), rgba(22, 12, 36, 0.72));
@@ -391,7 +391,7 @@ svg {
 }
 
 .install-command button,
-.install-actions a:first-child {
+.install-command button {
   min-height: 44px;
   padding: 0 18px;
   border: 0;
@@ -414,15 +414,15 @@ svg {
   grid-column: 2;
   grid-row: 2 / span 5;
   display: grid;
-  gap: 12px;
+  gap: 10px;
   align-content: start;
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 .install-flow {
   display: grid;
-  gap: 8px;
-  padding: 12px;
+  gap: 6px;
+  padding: 11px 12px;
   border: 1px solid rgba(140, 116, 255, 0.24);
   border-radius: 8px;
   background:
@@ -435,7 +435,7 @@ svg {
   display: flex;
   align-items: center;
   gap: 10px;
-  min-height: 34px;
+  min-height: 30px;
   padding-left: 2px;
   color: rgba(251, 248, 255, 0.86);
   font-size: 14px;
@@ -467,7 +467,7 @@ svg {
 .install-groups {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 9px;
 }
 
 .install-groups section,
@@ -475,12 +475,12 @@ svg {
   border: 1px solid rgba(224, 210, 255, 0.13);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.032);
-  padding: 14px;
+  padding: 12px;
 }
 
 .install-groups h2,
 .install-next h2 {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: rgba(186, 160, 162, 0.9);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -492,7 +492,7 @@ svg {
 .install-groups p {
   display: flex;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 7px;
   color: rgba(251, 248, 255, 0.82);
   font-size: 13px;
   line-height: 1.35;
@@ -500,7 +500,7 @@ svg {
 
 .install-next ol {
   display: grid;
-  gap: 7px;
+  gap: 6px;
   margin: 0;
   padding-left: 18px;
   color: rgba(226, 217, 240, 0.78);
@@ -513,8 +513,8 @@ svg {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  margin-top: 6px;
+  gap: 10px;
+  margin-top: 4px;
 }
 
 .install-actions a {
@@ -527,6 +527,13 @@ svg {
   color: rgba(251, 248, 255, 0.82);
   font-size: 14px;
   font-weight: 600;
+}
+
+.install-actions a:first-child {
+  border-color: rgba(140, 116, 255, 0.28);
+  background: rgba(140, 116, 255, 0.1);
+  color: rgba(251, 248, 255, 0.86);
+  box-shadow: none;
 }
 
 @keyframes installBgSettle {
