@@ -66,23 +66,41 @@ export default async function StepPage({ params }: { params: Promise<{ step: str
               <span className="install-mark" />
               <span>Anansi</span>
             </div>
-            <p className="install-label">Run it locally</p>
-            <h1 id="install-title">Install Anansi locally</h1>
+            <p className="install-label">Your direction is ready</p>
+            <h1 id="install-title">Weave your story with Anansi</h1>
             <p className="install-copy">
-              Anansi starts with your existing Hermes login. GPT-5.5 handles the creative
-              direction layer. Add your Runway API key when it&apos;s time to render video.
+              Turn a brief into approved directions, storyboarded shots, and Runway-ready
+              video renders through your local Anansi workbench.
             </p>
             <InstallCommand />
-            <div className="install-capabilities" aria-label="Included capabilities">
-              <span><b>✓</b> Visual workbench <em>Included</em></span>
-              <span><b>✓</b> Hermes skills <em>Included</em></span>
-              <span><b>✓</b> GPT-5.5 via Hermes OAuth <em>Connected</em></span>
-              <span><b>→</b> Runway API key <em>Connect to render</em></span>
-              <span><b>○</b> Veo 3.1 <em>Additional engine</em></span>
+            <div className="install-story" aria-label="Anansi install workflow">
+              <div className="install-flow">
+                <span><b>01</b> Direction approved</span>
+                <span><b>02</b> Hermes prepares prompts</span>
+                <span><b>03</b> Runway renders video</span>
+              </div>
+              <div className="install-groups">
+                <section>
+                  <h2>Included</h2>
+                  <p><b>✓</b> Visual workbench</p>
+                  <p><b>✓</b> Hermes login</p>
+                  <p><b>✓</b> GPT-5.5 creative direction</p>
+                </section>
+                <section>
+                  <h2>Connect to render</h2>
+                  <p><b>→</b> Add your Runway API key</p>
+                  <p><b>+</b> Veo 3.1 additional engine</p>
+                </section>
+              </div>
+              <div className="install-next">
+                <h2>After installing</h2>
+                <ol>
+                  <li>Run the command in your terminal.</li>
+                  <li>Open the local workbench.</li>
+                  <li>Approve shots and render with Runway.</li>
+                </ol>
+              </div>
             </div>
-            <p className="install-note">
-              Creative direction works immediately through Hermes. Runway connects your approved direction to video rendering.
-            </p>
             <div className="install-actions">
               <Link href="/workbench">Open workbench preview</Link>
               <Link href="/">Back to landing</Link>

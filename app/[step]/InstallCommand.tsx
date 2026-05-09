@@ -17,12 +17,12 @@ export function InstallCommand() {
       <div className="install-command" aria-label="Install command">
         <code>{command}</code>
         <button type="button" onClick={copyCommand}>
-          {copied ? "You're all set" : "Copy"}
+          {copied ? "You're all set" : "Copy install command"}
         </button>
       </div>
       {copied ? (
         <p className="install-success">
-          Paste it into your terminal to install Anansi locally.
+          Run this locally to open Anansi. Hermes handles creative direction with GPT-5.5, and your Runway API key connects approved shots to video rendering.
         </p>
       ) : null}
     </div>
