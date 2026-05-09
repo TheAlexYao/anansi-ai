@@ -75,9 +75,9 @@ export default async function StepPage({ params }: { params: Promise<{ step: str
             <InstallCommand />
             <div className="install-story" aria-label="Anansi install workflow">
               <div className="install-flow">
-                <span><b>01</b> Direction approved</span>
-                <span><b>02</b> Hermes prepares prompts</span>
-                <span><b>03</b> Runway renders video</span>
+                <span><b>01</b> Creative direction approved</span>
+                <span><b>02</b> Prompts queued by Hermes</span>
+                <span><b>03</b> Runway render ready</span>
               </div>
               <div className="install-groups">
                 <section>
@@ -95,14 +95,15 @@ export default async function StepPage({ params }: { params: Promise<{ step: str
               <div className="install-next">
                 <h2>After installing</h2>
                 <ol>
-                  <li>Run the command in your terminal.</li>
-                  <li>Open the local workbench.</li>
-                  <li>Approve shots and render with Runway.</li>
+                  <li>Run the command locally.</li>
+                  <li>Open the starter project.</li>
+                  <li>Add your Runway API key.</li>
+                  <li>Render approved shots.</li>
                 </ol>
               </div>
             </div>
             <div className="install-actions">
-              <Link href="/workbench">Open workbench preview</Link>
+              <Link href="/workbench">Preview workbench</Link>
               <Link href="/">Back to landing</Link>
             </div>
           </article>
