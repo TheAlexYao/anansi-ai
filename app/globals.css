@@ -633,6 +633,12 @@ svg {
   background:
     radial-gradient(circle at 50% 30%, #f0c0a8 0 18%, transparent 19%),
     linear-gradient(135deg, #221a3f, #b28083 48%, #66bcd7);
+  background-size: cover;
+  background-position: center;
+}
+
+.avatar-one {
+  background-image: url("/generated/profiles/anansi-approval/sofia-delgado.png");
 }
 
 .person-row b,
@@ -815,27 +821,23 @@ svg {
 }
 
 .approval-avatars .avatar-two {
-  background-image:
-    radial-gradient(circle at 50% 24%, #f2c6ae 0 15%, transparent 16%),
-    radial-gradient(ellipse at 50% 64%, #f0b8a1 0 24%, transparent 25%),
-    radial-gradient(ellipse at 50% 18%, #322042 0 22%, transparent 23%),
-    linear-gradient(135deg, #6ddfff, #8c74ff 52%, #baa0a2);
+  background-image: url("/generated/profiles/anansi-approval/sofia-delgado.png");
 }
 
-.avatar-three {
-  background-image:
-    radial-gradient(circle at 50% 25%, #d7a78c 0 15%, transparent 16%),
-    radial-gradient(ellipse at 50% 65%, #c88a76 0 24%, transparent 25%),
-    radial-gradient(ellipse at 47% 17%, #151321 0 24%, transparent 25%),
-    linear-gradient(135deg, #3a2042, #b0678f 48%, #7c68ff);
+.approval-avatars .avatar-sofia {
+  background-image: url("/generated/profiles/anansi-approval/sofia-delgado.png");
 }
 
-.avatar-four {
-  background-image:
-    radial-gradient(circle at 50% 25%, #e8b89a 0 15%, transparent 16%),
-    radial-gradient(ellipse at 50% 65%, #d79a86 0 24%, transparent 25%),
-    radial-gradient(ellipse at 56% 18%, #24112d 0 23%, transparent 24%),
-    linear-gradient(135deg, #28254c, #6a4fdc 48%, #cca1c2);
+.approval-avatars .avatar-marcus {
+  background-image: url("/generated/profiles/anansi-approval/marcus-chen.png");
+}
+
+.approval-avatars .avatar-amara {
+  background-image: url("/generated/profiles/anansi-approval/amara-okafor.png");
+}
+
+.approval-avatars .avatar-theo {
+  background-image: url("/generated/profiles/anansi-approval/theo-laurent.png");
 }
 
 .approved-badge {

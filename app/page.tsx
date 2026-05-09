@@ -190,9 +190,10 @@ export default function Home() {
               <PanelIcon type="shield" />
             </div>
             <div className="approval-avatars">
-              <div className="avatar avatar-two" />
-              <div className="avatar avatar-three" />
-              <div className="avatar avatar-four" />
+              <div className="avatar avatar-sofia" />
+              <div className="avatar avatar-marcus" />
+              <div className="avatar avatar-amara" />
+              <div className="avatar avatar-theo" />
             </div>
             <div className="approved-badge"><BadgeCheck aria-hidden="true" />Approved</div>
             <blockquote>“This is exactly the feeling<br />we want to create.”</blockquote>
