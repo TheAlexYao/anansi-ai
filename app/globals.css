@@ -261,10 +261,12 @@ svg {
 
 .install-slide {
   position: relative;
+  display: grid;
+  align-items: center;
   min-height: 100vh;
   min-height: 100svh;
   overflow: hidden;
-  padding: clamp(22px, 4vw, 70px);
+  padding: clamp(22px, 4vw, 58px);
   background: #12061f;
 }
 
@@ -289,11 +291,13 @@ svg {
   position: relative;
   z-index: 2;
   display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(285px, 0.76fr);
   align-content: start;
-  gap: 14px;
-  width: min(560px, calc(100vw - 40px));
-  min-height: min(680px, calc(100svh - 52px));
-  padding: clamp(22px, 3vw, 34px);
+  column-gap: clamp(22px, 3vw, 38px);
+  row-gap: 14px;
+  width: min(940px, calc(100vw - 64px));
+  min-height: auto;
+  padding: clamp(22px, 2.6vw, 34px);
   border: 1px solid rgba(224, 210, 255, 0.22);
   border-radius: 8px;
   background:
@@ -308,6 +312,7 @@ svg {
 }
 
 .install-lockup {
+  grid-column: 1 / -1;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -325,6 +330,7 @@ svg {
 }
 
 .install-label {
+  grid-column: 1;
   margin-top: 4px;
   color: rgba(186, 160, 162, 0.92);
   font-family: var(--font-mono);
@@ -334,12 +340,18 @@ svg {
 }
 
 .install-card h1 {
+  grid-column: 1;
   max-width: 480px;
   color: #fbf8ff;
   font-size: clamp(42px, 5.2vw, 72px);
   font-weight: 520;
   letter-spacing: -0.055em;
   line-height: 0.92;
+}
+
+.install-copy {
+  grid-column: 1;
+  max-width: 520px;
 }
 
 .install-copy,
@@ -351,6 +363,7 @@ svg {
 }
 
 .install-command-wrap {
+  grid-column: 1;
   display: grid;
   gap: 10px;
   margin-top: 6px;
@@ -396,6 +409,8 @@ svg {
 }
 
 .install-capabilities {
+  grid-column: 2;
+  grid-row: 2 / span 4;
   display: grid;
   gap: 7px;
   margin-top: 6px;
@@ -439,11 +454,19 @@ svg {
 }
 
 .install-actions {
+  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
   margin-top: 2px;
+}
+
+.install-note {
+  grid-column: 2;
+  max-width: 340px;
+  align-self: end;
+  font-size: 14px;
 }
 
 .install-actions a {
