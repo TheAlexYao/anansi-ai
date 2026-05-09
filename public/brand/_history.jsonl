@@ -1,0 +1,14 @@
+{"timestamp": "2026-05-08T13:38:13.273396", "file": "weaver.jpg", "model": "gemini-3-pro-image-preview", "style": "anansi-brandkit", "slug": "weaver"}
+{"timestamp": "2026-05-08T13:38:13.273420", "file": "aperture.jpg", "model": "gemini-3-pro-image-preview", "style": "anansi-brandkit", "slug": "aperture"}
+{"timestamp": "2026-05-08T13:38:13.273426", "file": "the-cut.jpg", "model": "gemini-3-pro-image-preview", "style": "anansi-brandkit", "slug": "the-cut"}
+{"timestamp": "2026-05-08T13:50:46.264295", "file": "/Users/alexyao/projects/anansi/public/public/og.jpg", "model": "gemini-3-pro-image-preview", "style": "aperture-assets", "slug": "og-image"}
+{"timestamp": "2026-05-08T13:50:46.264320", "file": "/Users/alexyao/projects/anansi/public/public/apple-touch-icon.jpg", "model": "gemini-3-pro-image-preview", "style": "aperture-assets", "slug": "apple-touch"}
+{"timestamp": "2026-05-08T13:50:46.264325", "file": "/Users/alexyao/projects/anansi/public/public/brand/aperture-splash.jpg", "model": "gemini-3-pro-image-preview", "style": "aperture-assets", "slug": "splash"}
+{"timestamp": "2026-05-08T14:09:40.396240", "file": "/Users/alexyao/projects/anansi/public/public/mark-light.jpg", "model": "gemini-3-pro-image-preview", "style": "aperture-mark", "slug": "mark-light"}
+{"timestamp": "2026-05-08T14:09:40.396281", "file": "/Users/alexyao/projects/anansi/public/public/mark-dark.jpg", "model": "gemini-3-pro-image-preview", "style": "aperture-mark", "slug": "mark-dark"}
+{"timestamp": "2026-05-08T14:09:40.396292", "file": "/Users/alexyao/projects/anansi/public/public/favicon-256.jpg", "model": "gemini-3-pro-image-preview", "style": "aperture-mark", "slug": "favicon-256"}
+{"timestamp": "2026-05-08T14:44:42.457451", "file": "/Users/alexyao/projects/anansi/public/public/hinter-render.jpg", "model": "gemini-3-pro-image-preview", "style": "hinter-frames", "slug": "hinter-render"}
+{"timestamp": "2026-05-08T14:44:42.457472", "file": "/Users/alexyao/projects/anansi/public/public/generated/runway/hinter-pitch-film/cabin-dawn.jpg", "model": "gemini-3-pro-image-preview", "style": "hinter-frames", "slug": "cabin-dawn"}
+{"timestamp": "2026-05-08T14:44:42.457478", "file": "/Users/alexyao/projects/anansi/public/public/generated/runway/hinter-pitch-film/forest-path.jpg", "model": "gemini-3-pro-image-preview", "style": "hinter-frames", "slug": "forest-path"}
+{"timestamp": "2026-05-08T14:44:42.457482", "file": "/Users/alexyao/projects/anansi/public/public/generated/runway/hinter-pitch-film/window-rain.jpg", "model": "gemini-3-pro-image-preview", "style": "hinter-frames", "slug": "window-rain"}
+{"timestamp": "2026-05-08T14:44:42.457486", "file": "/Users/alexyao/projects/anansi/public/public/generated/runway/hinter-pitch-film/firepit-evening.jpg", "model": "gemini-3-pro-image-preview", "style": "hinter-frames", "slug": "firepit-evening"}

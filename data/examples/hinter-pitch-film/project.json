@@ -1,0 +1,185 @@
+{
+  "id": "hinter-pitch-film",
+  "title": "Hinter Property No. 2 Pitch Film",
+  "format": "16:9",
+  "duration_seconds": 30,
+  "brief": {
+    "product": "Hinter Property No. 2",
+    "feeling": "intimate, weighted, hidden in nature",
+    "reference": "Hinter portfolio + Tarkovsky stills + slow-cinema cabin films",
+    "reference_weight": 70,
+    "story_tension": 65,
+    "human_approval": true
+  },
+  "mood": {
+    "title": "MOOD WEAVE",
+    "subtitle": "Visual references connecting tone, texture, and story.",
+    "palette": [
+      { "name": "Cedar", "hex": "#3d2f24" },
+      { "name": "Granite", "hex": "#3a3936" },
+      { "name": "Linen", "hex": "#d8cfbe" },
+      { "name": "Moss", "hex": "#4a4f3c" },
+      { "name": "Smoke", "hex": "#262522" }
+    ],
+    "themes": ["RETURN.", "NATURE.", "QUIET.", "BUILT.", "STAY."],
+    "tiles": [
+      { "kind": "image", "src": "/generated/runway/hinter-pitch-film/cabin-dawn.jpg", "label": "Cabin at first light" },
+      { "kind": "image", "src": "/generated/runway/hinter-pitch-film/forest-path.jpg", "label": "Path through cedars" },
+      { "kind": "image", "src": "/generated/runway/hinter-pitch-film/window-rain.jpg", "label": "Rain on glass" },
+      { "kind": "image", "src": "/generated/runway/hinter-pitch-film/firepit-evening.jpg", "label": "Firepit at dusk" },
+      { "kind": "palette" },
+      { "kind": "sketch" }
+    ]
+  },
+  "directions": [
+    {
+      "id": "01",
+      "title": "The forest remembers",
+      "body": "An intimate portrait of return. The cabin is where the body finally settles.",
+      "tone": "Intimate"
+    },
+    {
+      "id": "02",
+      "title": "Built for return",
+      "body": "Texture-forward. Architecture as patient craft. The materials breathe.",
+      "tone": "Tactile"
+    },
+    {
+      "id": "03",
+      "title": "Quiet as architecture",
+      "body": "What's not there. The negative space that lets the place speak.",
+      "tone": "Cinematic"
+    }
+  ],
+  "selected_direction": "01",
+  "tone_chips": ["Cinematic", "Intimate", "Tactile", "Nostalgic"],
+  "pacing": 76,
+  "scenes": [
+    {
+      "id": "hook",
+      "label": "HOOK",
+      "time": "0:00 – 0:08",
+      "options": [
+        {
+          "id": "1A",
+          "title": "Cabin at first light",
+          "src": "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
+          "lens": "35mm",
+          "motion": "Slow push-in",
+          "duration": "3.0s",
+          "strength": "0.75"
+        },
+        {
+          "id": "1B",
+          "title": "Path through cedars",
+          "src": "/generated/runway/hinter-pitch-film/forest-path.jpg",
+          "lens": "50mm",
+          "motion": "Tracking forward",
+          "duration": "3.0s",
+          "strength": "0.70"
+        }
+      ]
+    },
+    {
+      "id": "turn",
+      "label": "TURN",
+      "time": "0:08 – 0:18",
+      "options": [
+        {
+          "id": "2A",
+          "title": "Window with rain",
+          "src": "/generated/runway/hinter-pitch-film/window-rain.jpg",
+          "lens": "85mm",
+          "motion": "Hold and let go",
+          "duration": "4.5s",
+          "strength": "0.80"
+        },
+        {
+          "id": "2B",
+          "title": "Firepit catching",
+          "src": "/generated/runway/hinter-pitch-film/firepit-evening.jpg",
+          "lens": "100mm Macro",
+          "motion": "Static breathe",
+          "duration": "4.5s",
+          "strength": "0.65"
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "label": "MEMORY",
+      "time": "0:18 – 0:30",
+      "options": [
+        {
+          "id": "3A",
+          "title": "Cedar interior at dusk",
+          "src": "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
+          "lens": "35mm",
+          "motion": "Slow pullback",
+          "duration": "4.0s",
+          "strength": "0.70"
+        },
+        {
+          "id": "3B",
+          "title": "Stillness on the deck",
+          "src": "/generated/runway/hinter-pitch-film/window-rain.jpg",
+          "lens": "50mm",
+          "motion": "Hold",
+          "duration": "6.0s",
+          "strength": "0.85"
+        }
+      ]
+    }
+  ],
+  "selected_scenes": { "HOOK": "1A", "TURN": "2A", "MEMORY": "3B" },
+  "queue": [
+    {
+      "id": "1A",
+      "status": "RENDERING",
+      "progress": "48%",
+      "src": "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
+      "duration": "3.0s"
+    },
+    {
+      "id": "2A",
+      "status": "RENDERING",
+      "progress": "22%",
+      "src": "/generated/runway/hinter-pitch-film/window-rain.jpg",
+      "duration": "4.5s"
+    },
+    {
+      "id": "2B",
+      "status": "NEEDS PICK",
+      "progress": "",
+      "src": "/generated/runway/hinter-pitch-film/firepit-evening.jpg",
+      "duration": "4.5s"
+    },
+    {
+      "id": "3A",
+      "status": "APPROVED",
+      "progress": "",
+      "src": "/generated/runway/hinter-pitch-film/forest-path.jpg",
+      "duration": "4.0s"
+    },
+    {
+      "id": "3B",
+      "status": "APPROVED",
+      "progress": "",
+      "src": "/generated/runway/hinter-pitch-film/window-rain.jpg",
+      "duration": "6.0s"
+    }
+  ],
+  "queue_count": 4,
+  "model": "Runway Gen-4.5",
+  "output": {
+    "title": "FINAL OUTPUT",
+    "subtitle": "30s pitch film",
+    "format_label": "16:9",
+    "poster_lines": ["HINTER", "PROPERTY", "NO. 02"],
+    "poster_src": "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
+    "audio_label": "Cedar (Original Mix)",
+    "captions": true,
+    "safe_zones": true,
+    "duration": "0:30"
+  }
+}
