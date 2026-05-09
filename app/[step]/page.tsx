@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { InstallCommand } from "./InstallCommand";
 
 const slides: Record<number, { title: string; src: string; nextHref: string }> = {
   2: {
@@ -53,6 +54,44 @@ export default async function StepPage({ params }: { params: Promise<{ step: str
   }
 
   const slide = slides[stepNumber];
+
+  if (stepNumber === 8) {
+    return (
+      <main className="premium-flow-page">
+        <section className="install-slide" aria-labelledby="install-title">
+          <Image src={slide.src} alt="" fill sizes="100vw" className="install-slide-bg" priority />
+          <div className="install-backdrop" aria-hidden="true" />
+          <article className="install-card">
+            <div className="install-lockup">
+              <span className="install-mark" />
+              <span>Anansi</span>
+            </div>
+            <p className="install-label">Run it locally</p>
+            <h1 id="install-title">Install Anansi locally</h1>
+            <p className="install-copy">
+              Anansi starts with your existing Hermes login. GPT-5.5 handles the creative
+              direction layer. Connect Veo or Runway only when it&apos;s time to render video.
+            </p>
+            <InstallCommand />
+            <div className="install-capabilities" aria-label="Included capabilities">
+              <span><b>✓</b> Visual workbench <em>Included</em></span>
+              <span><b>✓</b> Hermes skills <em>Included</em></span>
+              <span><b>✓</b> GPT-5.5 via Hermes OAuth <em>Connected</em></span>
+              <span><b>○</b> Veo 3.1 <em>Optional</em></span>
+              <span><b>○</b> Runway <em>Optional</em></span>
+            </div>
+            <p className="install-note">
+              Creative direction works immediately through Hermes. Video render engines connect when needed.
+            </p>
+            <div className="install-actions">
+              <Link href="/workbench">Open workbench preview</Link>
+              <Link href="/">Back to landing</Link>
+            </div>
+          </article>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="premium-flow-page">
