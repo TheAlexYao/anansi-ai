@@ -57,7 +57,7 @@ export default async function StepPage({ params }: { params: Promise<{ step: str
 
   if (stepNumber === 8) {
     return (
-      <main className="premium-flow-page">
+      <main className="premium-flow-page install-flow-page">
         <section className="install-slide" aria-labelledby="install-title">
           <Image src={slide.src} alt="" fill sizes="100vw" className="install-slide-bg" priority />
           <div className="install-backdrop" aria-hidden="true" />
