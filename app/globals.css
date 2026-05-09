@@ -88,6 +88,14 @@ svg {
     linear-gradient(180deg, #180824 0%, #10051d 58%, #050514 100%);
 }
 
+.install-flow-page {
+  min-height: 100vh;
+  min-height: 100svh;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .premium-slide {
   position: relative;
   display: grid;
