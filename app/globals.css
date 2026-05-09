@@ -93,7 +93,9 @@ svg {
   min-height: 100svh;
   height: auto;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: auto;
 }
 
 .premium-slide {
@@ -2569,9 +2571,20 @@ svg {
 }
 
 @media (max-width: 1180px) {
+  .install-flow-page {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: auto;
+    overflow: visible;
+  }
+
   .install-slide {
     align-items: start;
-    overflow: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: auto;
+    overflow: visible;
   }
 
   .install-card {
@@ -2867,7 +2880,9 @@ svg {
 
 @media (max-width: 760px) {
   .install-slide {
+    display: block;
     padding: 16px;
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
   }
 
   .install-card {
