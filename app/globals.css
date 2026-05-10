@@ -4747,3 +4747,11 @@ svg {
     font-size: 14px;
   }
 }
+
+.demo-blocker-note {
+  max-width: 1680px;
+  margin: 14px auto 0;
+  color: rgba(186, 160, 162, 0.78);
+  font-size: 13px;
+  font-style: normal;
+}

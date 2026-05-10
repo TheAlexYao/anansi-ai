@@ -7,14 +7,10 @@ import {
   ArrowRight,
   BadgeCheck,
   Check,
-  ChevronRight,
   Circle,
-  Clapperboard,
   Copy,
-  Film,
   Play,
   RefreshCcw,
-  Send,
   Sparkles,
   Square,
   WandSparkles,
@@ -554,15 +550,7 @@ export function AnansiWorkbench({ project }: { project: Project }) {
 
       <VideoLightbox media={lightboxMedia} onClose={() => setLightboxMedia(null)} />
 
-      <footer className="demo-footer">
-        <span><Clapperboard size={16} /> Public Anansi product</span>
-        <ChevronRight size={15} />
-        <span><Sparkles size={16} /> Hermes workflow events</span>
-        <ChevronRight size={15} />
-        <span><Film size={16} /> Runway generation</span>
-        {blocker ? <em>{blocker}</em> : null}
-        <button disabled={!canAdvance && !(stage === "approval" && !approved)} onClick={advance}><Send size={16} /> {primaryAction}</button>
-      </footer>
+      {blocker ? <p className="demo-blocker-note">{blocker}</p> : null}
     </main>
   );
 }
