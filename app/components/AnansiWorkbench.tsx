@@ -418,12 +418,14 @@ function RenderQueue({ selectedPath, active, openMedia }: { selectedPath: SceneO
   );
 }
 
-function FinalReview({ project, selectedPath }: { project: Project; selectedPath: SceneOption[] }) {
+function FinalReview({ project, selectedPath, openMedia }: { project: Project; selectedPath: SceneOption[]; openMedia: (media: { src: string; label: string }) => void }) {
+  const finalSrc = project.output.video_src ?? project.output.poster_src;
+
   return (
     <section className="demo-card demo-card--final demo-final">
       <div className="demo-final-film">
-        <MediaFrame src={project.output.poster_src} label={project.output.title} tall />
-        <button aria-label="Play final film"><Play size={24} fill="currentColor" /></button>
+        <MediaFrame src={finalSrc} label={project.output.title} tall onOpen={() => openMedia({ src: finalSrc, label: project.output.title })} />
+        <button aria-label="Play final film" onClick={() => openMedia({ src: finalSrc, label: project.output.title })}><Play size={24} fill="currentColor" /></button>
         <footer>
           <span>FINAL FILM</span>
           <b>{project.output.duration}</b>
@@ -555,7 +557,7 @@ export function AnansiWorkbench({ project }: { project: Project }) {
             {stage === "storyboard" ? <Storyboard project={project} selected={selected} setSelected={setSelected} openMedia={setLightboxMedia} /> : null}
             {stage === "approval" ? <ApprovalPanel approved={approved} selectedPath={selectedPath} setApproved={setApproved} /> : null}
             {stage === "render" ? <RenderQueue selectedPath={selectedPath} active openMedia={setLightboxMedia} /> : null}
-            {stage === "review" ? <FinalReview project={project} selectedPath={selectedPath} /> : null}
+            {stage === "review" ? <FinalReview project={project} selectedPath={selectedPath} openMedia={setLightboxMedia} /> : null}
           </div>
         </section>
       </section>
