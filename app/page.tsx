@@ -12,25 +12,25 @@ import {
 } from "lucide-react";
 
 const heroImages = {
-  residence: "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
-  exterior: "/generated/runway/hinter-pitch-film/forest-path.jpg",
-  interior: "/generated/runway/hinter-pitch-film/window-rain.jpg",
-  material: "/generated/runway/hinter-pitch-film/firepit-evening.jpg",
-  lounge: "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
-  skyline: "/generated/runway/hinter-pitch-film/forest-path.jpg",
-  storyboardOne: "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
-  storyboardTwo: "/generated/runway/hinter-pitch-film/window-rain.jpg",
-  storyboardThree: "/generated/runway/hinter-pitch-film/firepit-evening.jpg",
+  residence: "/generated/runway/anansi/direction-selected-route-1.png",
+  exterior: "/generated/runway/anansi/brief-path-through-cedars.png",
+  interior: "/generated/runway/anansi/brief-rain-on-glass.png",
+  material: "/generated/runway/anansi/brief-cabin-at-first-light.png",
+  lounge: "/generated/runway/anansi/direction-01.png",
+  skyline: "/generated/runway/anansi/direction-03.png",
+  storyboardOne: "/generated/runway/anansi/brief-cabin-at-first-light.png",
+  storyboardTwo: "/generated/runway/anansi/brief-rain-on-glass.png",
+  storyboardThree: "/generated/runway/anansi/brief-path-through-cedars.png",
 };
 
-const swatches = ["#33213d", "#9f7d79", "#8eb8df", "#171627", "#0d6068"];
+const swatches = ["#2b231d", "#8f7a68", "#b7c6c7", "#171627", "#455244"];
 
 const tasks: Array<[string, string, boolean]> = [
-  ["Analyze brief", "Complete", true],
-  ["Build direction board", "Complete", true],
-  ["Write shots & prompts", "Complete", true],
-  ["Plan camera & motion", "Complete", true],
-  ["Prepare assets", "", false],
+  ["Parse brief", "Complete", true],
+  ["Route agent skills", "Complete", true],
+  ["Prepare shot options", "Complete", true],
+  ["Approve render path", "Complete", true],
+  ["Send to Runway", "Ready", false],
 ];
 
 function ArrowIcon() {
@@ -112,7 +112,7 @@ export default function Home() {
           </nav>
           <div className="nav-actions">
             <a href="#login" className="login-link">Log in</a>
-            <Link href="/2" className="cta-button">Get started <ArrowIcon /></Link>
+            <Link href="/workbench?project=hinter-pitch-film" className="cta-button">Open workbench <ArrowIcon /></Link>
           </div>
         </header>
 
@@ -123,8 +123,8 @@ export default function Home() {
 
         <div className="hero-heading">
           <h1 id="hero-title">Anansi</h1>
-          <p className="hero-kicker">Creative direction, kept human.</p>
-          <p className="hero-subcopy">From brief to final frame. One intelligent workflow <br />for cinematic generated media.</p>
+          <p className="hero-kicker">The creative orchestration layer for AI video.</p>
+          <p className="hero-subcopy">Runway is the generation engine. Hermes runs the agents. Anansi coordinates the work from brief to approved render.</p>
         </div>
 
         <div className="workflow-stage" aria-label="Anansi workflow preview">
@@ -133,10 +133,10 @@ export default function Home() {
               <span>01</span><b>Brief</b>
               <PanelIcon type="file" />
             </div>
-            <h2>Luxury real-estate<br />brand film</h2>
-            <p>A cinematic brand film that captures timeless architecture, elevated living, and a sense of calm aspiration.</p>
+            <h2>Hinter pitch<br />film</h2>
+            <p>A 30-second cinematic property film with mood, direction, shot options, approval, and Runway handoff.</p>
             <div className="tag-row">
-              <span>Brand Film</span><span>Luxury</span><span>Cinematic</span><span>2-3 min</span><span>16:9</span>
+              <span>Runway</span><span>Hermes</span><span>GPT-image-2</span><span>30s</span><span>16:9</span>
             </div>
             <div className="person-row">
               <div className="avatar avatar-one" />
@@ -148,7 +148,7 @@ export default function Home() {
 
           <article className="workflow-card board-card">
             <div className="card-top">
-              <span>02</span><b>Direction board</b>
+              <span>02</span><b>Mood + direction</b>
               <PanelIcon type="grid" />
             </div>
             <div className="board-grid">
@@ -160,7 +160,7 @@ export default function Home() {
             <div className="swatches">
               {swatches.map((color) => <span key={color} style={{ backgroundColor: color }} />)}
             </div>
-            <p>Mood. Tone. Story. Style.</p>
+            <p>Visual language before credits get spent.</p>
           </article>
 
           <FlowArrow />
@@ -171,9 +171,9 @@ export default function Home() {
               <PanelIcon type="briefcase" />
             </div>
             {[
-              ["01", "Arrival", "Dusk. Wide establishing shot of the property.", heroImages.storyboardOne],
-              ["02", "Experience", "Intimate moments that evoke calm and clarity.", heroImages.storyboardTwo],
-              ["03", "Aspiration", "The view. The lifestyle. The promise.", heroImages.storyboardThree],
+              ["01", "Hook", "Cabin at first light. Quiet entry into the world.", heroImages.storyboardOne],
+              ["02", "Turn", "Rain on glass. Interior emotion and material detail.", heroImages.storyboardTwo],
+              ["03", "Memory", "Path through cedars. The property becomes inevitable.", heroImages.storyboardThree],
             ].map(([num, title, copy, src]) => (
               <div className="story-row" key={num}>
                 <ImageTile src={src} />
@@ -196,15 +196,15 @@ export default function Home() {
               <div className="avatar avatar-theo" />
             </div>
             <div className="approved-badge"><BadgeCheck aria-hidden="true" />Approved</div>
-            <blockquote>“This is exactly the feeling<br />we want to create.”</blockquote>
-            <cite>— Marketing Director</cite>
+            <blockquote>“This is the route.<br />Send these shots to render.”</blockquote>
+            <cite>— Producer approval</cite>
           </article>
 
           <FlowArrow />
 
           <article className="workflow-card tasks-card">
             <div className="card-top">
-              <span>05</span><b>Hermes — Tasks</b>
+              <span>05</span><b>Hermes — Agent run</b>
               <PanelIcon type="hermes" />
             </div>
             <div className="task-list">
@@ -222,16 +222,16 @@ export default function Home() {
 
           <article className="workflow-card runway-card">
             <div className="card-top">
-              <span>06</span><b>Runway — Generate</b>
+              <span>06</span><b>Runway — Render queue</b>
               <PanelIcon type="runway" />
             </div>
             <div className="node-chart">
-              <span>Shot 01<br /><em>Establishing Wide</em></span>
+              <span>Shot 1A<br /><em>Cabin at first light</em></span>
               <div>
-                <span>Shot 02A<br /><em>Interior Detail</em></span>
-                <span>Shot 02B<br /><em>Living Moment</em></span>
+                <span>Shot 2A<br /><em>Rain on glass</em></span>
+                <span>Shot 2B<br /><em>Firepit catching</em></span>
               </div>
-              <span>Shot 03<br /><em>View & Lifestyle</em></span>
+              <span>Shot 3B<br /><em>Stillness on deck</em></span>
             </div>
             <div className="generating">Generating… <i /></div>
           </article>
@@ -247,8 +247,8 @@ export default function Home() {
 
         <div className="final-film" style={{ "--tile-image": `url(${heroImages.residence})` } as CSSProperties}>
           <div className="film-toolbar">
-            <span>07</span><b>Final film</b>
-            <em>2:17</em><i>4K</i>
+            <span>07</span><b>Final output</b>
+            <em>0:30</em><i>16:9</i>
           </div>
         </div>
 
@@ -263,12 +263,12 @@ export default function Home() {
         <footer className="hero-footer">
           <div className="footer-brand">
             <span className="footer-mark" />
-            <p>Anansi orchestrates the creative process<br />so you can focus on what matters: the story.</p>
+            <p>Anansi orchestrates the messy middle<br />between creative intent and AI generation.</p>
           </div>
-          <p className="brand-line">Cinematic. Intentional. On brand.</p>
+          <p className="brand-line">Memory. Taste. Approval. Handoff.</p>
           <div className="footer-cta">
-            <span>Bring your next vision to life.</span>
-            <Link href="/2" className="cta-button">Get started <ArrowIcon /></Link>
+            <span>Open the live workbench.</span>
+            <Link href="/workbench?project=hinter-pitch-film" className="cta-button">Open workbench <ArrowIcon /></Link>
           </div>
         </footer>
       </section>
