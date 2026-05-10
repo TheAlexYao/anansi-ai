@@ -1,4 +1,7 @@
+"use client";
+
 import type { CSSProperties } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -10,6 +13,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { InstallPopup } from "./components/InstallPopup";
 
 const heroImages = {
   residence: "/generated/runway/anansi/direction-selected-route-1.png",
@@ -98,6 +102,8 @@ function PlayTile({ src }: { src: string }) {
 }
 
 export default function Home() {
+  const [installOpen, setInstallOpen] = useState(false);
+
   return (
     <main className="clone-page">
       <section className="hero-clone" aria-labelledby="hero-title">
@@ -111,7 +117,7 @@ export default function Home() {
             <a href="#resources">Resources</a>
           </nav>
           <div className="nav-actions">
-            <a href="#login" className="login-link">Log in</a>
+            <button type="button" className="login-link install-link" onClick={() => setInstallOpen(true)}>Install locally</button>
             <Link href="/workbench?project=hinter-pitch-film" className="cta-button">Open workbench <ArrowIcon /></Link>
           </div>
         </header>
@@ -268,10 +274,11 @@ export default function Home() {
           <p className="brand-line">Memory. Taste. Approval. Handoff.</p>
           <div className="footer-cta">
             <span>Open the live workbench.</span>
-            <Link href="/workbench?project=hinter-pitch-film" className="cta-button">Open workbench <ArrowIcon /></Link>
+            <button type="button" className="cta-button cta-button-secondary" onClick={() => setInstallOpen(true)}>Install locally <ArrowIcon /></button>
           </div>
         </footer>
       </section>
+      <InstallPopup open={installOpen} onClose={() => setInstallOpen(false)} />
     </main>
   );
 }
