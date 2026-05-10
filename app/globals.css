@@ -5036,3 +5036,26 @@ svg {
 .footer-cta .cta-button + .cta-button {
   margin-top: 10px;
 }
+
+.play-tile,
+.final-film {
+  overflow: hidden;
+  background: var(--tile-image) center / cover no-repeat;
+}
+
+.play-tile video,
+.final-film video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play-tile video {
+  z-index: 1;
+}
+
+.final-film video {
+  z-index: 1;
+}
