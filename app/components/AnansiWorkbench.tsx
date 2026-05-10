@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -123,17 +123,59 @@ function previousStages(stage: DemoStage) {
   return stageOrder.slice(0, stageIndex(stage));
 }
 
-function MediaFrame({ src, label, tall = false }: { src?: string; label: string; tall?: boolean }) {
-  const isVideo = Boolean(src?.match(/\.(mp4|webm|mov)$/i));
+function isVideoSrc(src?: string) {
+  return Boolean(src?.match(/\.(mp4|webm|mov)$/i));
+}
 
-  return (
-    <div className={tall ? "demo-media demo-media--tall" : "demo-media"}>
+function MediaFrame({ src, label, tall = false, onOpen }: { src?: string; label: string; tall?: boolean; onOpen?: () => void }) {
+  const isVideo = isVideoSrc(src);
+  const className = `${tall ? "demo-media demo-media--tall" : "demo-media"}${onOpen ? " demo-media--clickable" : ""}`;
+  const content = (
+    <>
       {src && isVideo ? (
         <video src={src} muted loop playsInline autoPlay preload="metadata" aria-label={label} />
       ) : src ? (
         <Image src={src} alt={label} fill sizes="(max-width: 900px) 88vw, 36vw" />
       ) : null}
       <span>{label}</span>
+      {onOpen ? <b className="demo-media-open">Click to view</b> : null}
+    </>
+  );
+
+  if (onOpen) {
+    return (
+      <button type="button" className={className} onClick={(event) => { event.stopPropagation(); onOpen(); }}>
+        {content}
+      </button>
+    );
+  }
+
+  return <div className={className}>{content}</div>;
+}
+
+function VideoLightbox({ media, onClose }: { media: { src: string; label: string } | null; onClose: () => void }) {
+  useEffect(() => {
+    if (!media) return;
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [media, onClose]);
+
+  if (!media) return null;
+
+  return (
+    <div className="demo-lightbox" role="dialog" aria-modal="true" aria-label={media.label} onClick={onClose}>
+      <div className="demo-lightbox-inner" onClick={(event) => event.stopPropagation()}>
+        <button type="button" onClick={onClose}>Close</button>
+        {isVideoSrc(media.src) ? (
+          <video src={media.src} controls autoPlay playsInline />
+        ) : (
+          <Image src={media.src} alt={media.label} width={1280} height={720} />
+        )}
+        <span>{media.label}</span>
+      </div>
     </div>
   );
 }
@@ -247,7 +289,7 @@ function DirectionBoard({ project, selectedDirection, setSelectedDirection }: { 
   );
 }
 
-function Storyboard({ project, selected, setSelected }: { project: Project; selected: Record<string, string>; setSelected: React.Dispatch<React.SetStateAction<Record<string, string>>> }) {
+function Storyboard({ project, selected, setSelected, openMedia }: { project: Project; selected: Record<string, string>; setSelected: React.Dispatch<React.SetStateAction<Record<string, string>>>; openMedia: (media: { src: string; label: string }) => void }) {
   return (
     <section className="demo-card demo-card--storyboard demo-storyboard">
       <header>
@@ -259,7 +301,7 @@ function Storyboard({ project, selected, setSelected }: { project: Project; sele
           const chosen = scene.options.find((option) => option.id === selected[scene.label]) ?? scene.options[0];
           return (
             <article key={scene.id}>
-              <MediaFrame src={chosen.src} label={chosen.title} />
+              <MediaFrame src={chosen.src} label={chosen.title} onOpen={() => openMedia({ src: chosen.src, label: chosen.title })} />
               <span>{scene.time}</span>
               <strong>{scene.label}: {chosen.title}</strong>
               <p>{chosen.lens} / {chosen.motion}</p>
@@ -277,7 +319,7 @@ function Storyboard({ project, selected, setSelected }: { project: Project; sele
             <div>
               {scene.options.map((option) => (
                 <button className={selected[scene.label] === option.id ? "demo-shot is-selected" : "demo-shot"} key={option.id} onClick={() => setSelected((current) => ({ ...current, [scene.label]: option.id }))}>
-                  <MediaFrame src={option.src} label={option.title} />
+                  <MediaFrame src={option.src} label={option.title} onOpen={() => openMedia({ src: option.src, label: option.title })} />
                   <strong>{option.id} · {option.title}</strong>
                   <p>{option.lens} · {option.motion} · {option.duration}</p>
                 </button>
@@ -329,7 +371,7 @@ function ApprovalPanel({ approved, selectedPath, setApproved }: { approved: bool
   );
 }
 
-function RenderQueue({ selectedPath, active }: { selectedPath: SceneOption[]; active: boolean }) {
+function RenderQueue({ selectedPath, active, openMedia }: { selectedPath: SceneOption[]; active: boolean; openMedia: (media: { src: string; label: string }) => void }) {
   return (
     <section className="demo-card demo-card--render demo-render">
       <header>
@@ -343,7 +385,7 @@ function RenderQueue({ selectedPath, active }: { selectedPath: SceneOption[]; ac
       <div className="demo-render-grid">
         {selectedPath.map((shot, index) => (
           <article className={active ? "demo-render-card is-active" : "demo-render-card"} key={shot.id}>
-            <MediaFrame src={shot.src} label={shot.title} />
+            <MediaFrame src={shot.src} label={shot.title} onOpen={() => openMedia({ src: shot.src, label: shot.title })} />
             <div>
               <span>Shot {shot.id}</span>
               <strong>{shot.motion}</strong>
@@ -390,6 +432,7 @@ export function AnansiWorkbench({ project }: { project: Project }) {
   const [selected, setSelected] = useState<Record<string, string>>(project.selected_scenes);
   const [approved, setApproved] = useState(false);
   const [maxUnlockedIndex, setMaxUnlockedIndex] = useState(0);
+  const [lightboxMedia, setLightboxMedia] = useState<{ src: string; label: string } | null>(null);
 
   const selectedPath = useMemo(
     () => project.scenes.map((scene) => scene.options.find((option) => option.id === selected[scene.label]) ?? scene.options[0]),
@@ -489,13 +532,15 @@ export function AnansiWorkbench({ project }: { project: Project }) {
           <div className="demo-main">
             {stage === "brief" ? <BriefComposer project={project} /> : null}
             {stage === "directions" ? <DirectionBoard project={project} selectedDirection={selectedDirection} setSelectedDirection={setSelectedDirection} /> : null}
-            {stage === "storyboard" ? <Storyboard project={project} selected={selected} setSelected={setSelected} /> : null}
+            {stage === "storyboard" ? <Storyboard project={project} selected={selected} setSelected={setSelected} openMedia={setLightboxMedia} /> : null}
             {stage === "approval" ? <ApprovalPanel approved={approved} selectedPath={selectedPath} setApproved={setApproved} /> : null}
-            {stage === "render" ? <RenderQueue selectedPath={selectedPath} active /> : null}
+            {stage === "render" ? <RenderQueue selectedPath={selectedPath} active openMedia={setLightboxMedia} /> : null}
             {stage === "review" ? <FinalReview project={project} selectedPath={selectedPath} /> : null}
           </div>
         </section>
       </section>
+
+      <VideoLightbox media={lightboxMedia} onClose={() => setLightboxMedia(null)} />
 
       <footer className="demo-footer">
         <span><Clapperboard size={16} /> Public Anansi product</span>
