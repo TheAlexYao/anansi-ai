@@ -274,6 +274,7 @@ export default function Home() {
           <p className="brand-line">Memory. Taste. Approval. Handoff.</p>
           <div className="footer-cta">
             <span>Open the live workbench.</span>
+            <Link href="/workbench?project=hinter-pitch-film" className="cta-button">Open workbench <ArrowIcon /></Link>
             <button type="button" className="cta-button cta-button-secondary" onClick={() => setInstallOpen(true)}>Install locally <ArrowIcon /></button>
           </div>
         </footer>
