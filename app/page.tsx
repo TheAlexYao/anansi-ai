@@ -259,7 +259,7 @@ export default function Home() {
           <video src={heroImages.finalVideo} muted loop playsInline autoPlay preload="metadata" />
           <div className="film-toolbar">
             <span>07</span><b>Final output</b>
-            <em>0:30</em><i>16:9</i>
+            <em>1:19</em><i>16:9</i>
           </div>
         </div>
 
