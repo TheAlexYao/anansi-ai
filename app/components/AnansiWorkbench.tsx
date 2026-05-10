@@ -144,9 +144,21 @@ function MediaFrame({ src, label, tall = false, onOpen }: { src?: string; label:
 
   if (onOpen) {
     return (
-      <button type="button" className={className} onClick={(event) => { event.stopPropagation(); onOpen(); }}>
+      <div
+        className={className}
+        role="button"
+        tabIndex={0}
+        onClick={(event) => { event.stopPropagation(); onOpen(); }}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            event.stopPropagation();
+            onOpen();
+          }
+        }}
+      >
         {content}
-      </button>
+      </div>
     );
   }
 
