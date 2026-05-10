@@ -15,20 +15,61 @@
     "title": "MOOD WEAVE",
     "subtitle": "Visual references connecting tone, texture, and story.",
     "palette": [
-      { "name": "Cedar", "hex": "#3d2f24" },
-      { "name": "Granite", "hex": "#3a3936" },
-      { "name": "Linen", "hex": "#d8cfbe" },
-      { "name": "Moss", "hex": "#4a4f3c" },
-      { "name": "Smoke", "hex": "#262522" }
+      {
+        "name": "Cedar",
+        "hex": "#3d2f24"
+      },
+      {
+        "name": "Granite",
+        "hex": "#3a3936"
+      },
+      {
+        "name": "Linen",
+        "hex": "#d8cfbe"
+      },
+      {
+        "name": "Moss",
+        "hex": "#4a4f3c"
+      },
+      {
+        "name": "Smoke",
+        "hex": "#262522"
+      }
     ],
-    "themes": ["RETURN.", "NATURE.", "QUIET.", "BUILT.", "STAY."],
+    "themes": [
+      "RETURN.",
+      "NATURE.",
+      "QUIET.",
+      "BUILT.",
+      "STAY."
+    ],
     "tiles": [
-      { "kind": "image", "src": "/generated/runway/hinter-pitch-film/cabin-dawn.jpg", "label": "Cabin at first light" },
-      { "kind": "image", "src": "/generated/runway/hinter-pitch-film/forest-path.jpg", "label": "Path through cedars" },
-      { "kind": "image", "src": "/generated/runway/hinter-pitch-film/window-rain.jpg", "label": "Rain on glass" },
-      { "kind": "image", "src": "/generated/runway/hinter-pitch-film/firepit-evening.jpg", "label": "Firepit at dusk" },
-      { "kind": "palette" },
-      { "kind": "sketch" }
+      {
+        "kind": "image",
+        "src": "/generated/runway/anansi/brief-cabin-at-first-light.png",
+        "label": "Cabin at first light"
+      },
+      {
+        "kind": "image",
+        "src": "/generated/runway/anansi/brief-path-through-cedars.png",
+        "label": "Path through cedars"
+      },
+      {
+        "kind": "image",
+        "src": "/generated/runway/anansi/brief-rain-on-glass.png",
+        "label": "Rain on glass"
+      },
+      {
+        "kind": "image",
+        "src": "/generated/runway/anansi/direction-selected-route-1.png",
+        "label": "Selected direction board"
+      },
+      {
+        "kind": "palette"
+      },
+      {
+        "kind": "sketch"
+      }
     ]
   },
   "directions": [
@@ -52,18 +93,23 @@
     }
   ],
   "selected_direction": "01",
-  "tone_chips": ["Cinematic", "Intimate", "Tactile", "Nostalgic"],
+  "tone_chips": [
+    "Cinematic",
+    "Intimate",
+    "Tactile",
+    "Nostalgic"
+  ],
   "pacing": 76,
   "scenes": [
     {
       "id": "hook",
       "label": "HOOK",
-      "time": "0:00 – 0:08",
+      "time": "0:00 \u2013 0:08",
       "options": [
         {
           "id": "1A",
           "title": "Cabin at first light",
-          "src": "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
+          "src": "/generated/runway/anansi/shots-1a.mp4",
           "lens": "35mm",
           "motion": "Slow push-in",
           "duration": "3.0s",
@@ -72,7 +118,7 @@
         {
           "id": "1B",
           "title": "Path through cedars",
-          "src": "/generated/runway/hinter-pitch-film/forest-path.jpg",
+          "src": "/generated/runway/anansi/shots-1b.mp4",
           "lens": "50mm",
           "motion": "Tracking forward",
           "duration": "3.0s",
@@ -83,12 +129,12 @@
     {
       "id": "turn",
       "label": "TURN",
-      "time": "0:08 – 0:18",
+      "time": "0:08 \u2013 0:18",
       "options": [
         {
           "id": "2A",
           "title": "Window with rain",
-          "src": "/generated/runway/hinter-pitch-film/window-rain.jpg",
+          "src": "/generated/runway/anansi/shots-2a.mp4",
           "lens": "85mm",
           "motion": "Hold and let go",
           "duration": "4.5s",
@@ -97,7 +143,7 @@
         {
           "id": "2B",
           "title": "Firepit catching",
-          "src": "/generated/runway/hinter-pitch-film/firepit-evening.jpg",
+          "src": "/generated/runway/anansi/shots-2b.mp4",
           "lens": "100mm Macro",
           "motion": "Static breathe",
           "duration": "4.5s",
@@ -108,12 +154,12 @@
     {
       "id": "memory",
       "label": "MEMORY",
-      "time": "0:18 – 0:30",
+      "time": "0:18 \u2013 0:30",
       "options": [
         {
           "id": "3A",
           "title": "Cedar interior at dusk",
-          "src": "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
+          "src": "/generated/runway/anansi/shots-3a.mp4",
           "lens": "35mm",
           "motion": "Slow pullback",
           "duration": "4.0s",
@@ -122,7 +168,7 @@
         {
           "id": "3B",
           "title": "Stillness on the deck",
-          "src": "/generated/runway/hinter-pitch-film/window-rain.jpg",
+          "src": "/generated/runway/anansi/shots-3b.mp4",
           "lens": "50mm",
           "motion": "Hold",
           "duration": "6.0s",
@@ -131,41 +177,45 @@
       ]
     }
   ],
-  "selected_scenes": { "HOOK": "1A", "TURN": "2A", "MEMORY": "3B" },
+  "selected_scenes": {
+    "HOOK": "1A",
+    "TURN": "2A",
+    "MEMORY": "3B"
+  },
   "queue": [
     {
       "id": "1A",
       "status": "RENDERING",
       "progress": "48%",
-      "src": "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
+      "src": "/generated/runway/anansi/shots-1a.mp4",
       "duration": "3.0s"
     },
     {
       "id": "2A",
       "status": "RENDERING",
       "progress": "22%",
-      "src": "/generated/runway/hinter-pitch-film/window-rain.jpg",
+      "src": "/generated/runway/anansi/shots-2a.mp4",
       "duration": "4.5s"
     },
     {
       "id": "2B",
       "status": "NEEDS PICK",
       "progress": "",
-      "src": "/generated/runway/hinter-pitch-film/firepit-evening.jpg",
+      "src": "/generated/runway/anansi/shots-2b.mp4",
       "duration": "4.5s"
     },
     {
       "id": "3A",
       "status": "APPROVED",
       "progress": "",
-      "src": "/generated/runway/hinter-pitch-film/forest-path.jpg",
+      "src": "/generated/runway/anansi/shots-3a.mp4",
       "duration": "4.0s"
     },
     {
       "id": "3B",
       "status": "APPROVED",
       "progress": "",
-      "src": "/generated/runway/hinter-pitch-film/window-rain.jpg",
+      "src": "/generated/runway/anansi/shots-3b.mp4",
       "duration": "6.0s"
     }
   ],
@@ -175,11 +225,23 @@
     "title": "FINAL OUTPUT",
     "subtitle": "30s pitch film",
     "format_label": "16:9",
-    "poster_lines": ["HINTER", "PROPERTY", "NO. 02"],
-    "poster_src": "/generated/runway/hinter-pitch-film/cabin-dawn.jpg",
+    "poster_lines": [
+      "HINTER",
+      "PROPERTY",
+      "NO. 02"
+    ],
+    "poster_src": "/generated/runway/anansi/direction-selected-route-1.png",
     "audio_label": "Cedar (Original Mix)",
     "captions": true,
     "safe_zones": true,
-    "duration": "0:30"
+    "duration": "0:30",
+    "video_src": "/generated/runway/anansi/final-output.mp4"
+  },
+  "asset_drop": {
+    "drive_folder": "https://drive.google.com/drive/folders/1nfCDfYkPlJ0IaTSUGeZiGFz0V576PFfI",
+    "site_folder": "public/generated/runway/anansi",
+    "final_output_path": "public/generated/runway/anansi/final-output.mp4",
+    "final_output_url": "/generated/runway/anansi/final-output.mp4",
+    "note": "Final output video is expected here when available."
   }
 }

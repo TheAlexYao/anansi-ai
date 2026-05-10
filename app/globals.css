@@ -576,8 +576,16 @@ svg {
   min-height: 330px;
 }
 
-.demo-media img {
+.demo-media img,
+.demo-media video {
   object-fit: cover;
+}
+
+.demo-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .demo-media::after {
