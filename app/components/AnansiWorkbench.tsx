@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { InstallPopup } from "./InstallPopup";
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
@@ -448,6 +449,7 @@ export function AnansiWorkbench({ project }: { project: Project }) {
   const [approved, setApproved] = useState(false);
   const [maxUnlockedIndex, setMaxUnlockedIndex] = useState(0);
   const [lightboxMedia, setLightboxMedia] = useState<{ src: string; label: string } | null>(null);
+  const [installOpen, setInstallOpen] = useState(false);
 
   const selectedPath = useMemo(
     () => project.scenes.map((scene) => scene.options.find((option) => option.id === selected[scene.label]) ?? scene.options[0]),
@@ -516,10 +518,13 @@ export function AnansiWorkbench({ project }: { project: Project }) {
             </button>
           ))}
         </nav>
-        <button className="demo-topbar-action" disabled={!canAdvance && !(stage === "approval" && !approved)} onClick={advance}>
+        <div className="demo-topbar-actions">
+          <button type="button" className="demo-install-action" onClick={() => setInstallOpen(true)}>Install</button>
+          <button className="demo-topbar-action" disabled={!canAdvance && !(stage === "approval" && !approved)} onClick={advance}>
           {primaryAction}
           <ArrowRight size={17} />
-        </button>
+          </button>
+        </div>
       </header>
 
       <section className="demo-stage-frame">
@@ -556,6 +561,7 @@ export function AnansiWorkbench({ project }: { project: Project }) {
       </section>
 
       <VideoLightbox media={lightboxMedia} onClose={() => setLightboxMedia(null)} />
+      <InstallPopup open={installOpen} onClose={() => setInstallOpen(false)} />
 
       {blocker ? <p className="demo-blocker-note">{blocker}</p> : null}
     </main>
