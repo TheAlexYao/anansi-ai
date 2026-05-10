@@ -16,6 +16,7 @@ import {
 import { InstallPopup } from "./components/InstallPopup";
 
 const heroImages = {
+  finalVideo: "/generated/runway/anansi/final-output.mp4",
   residence: "/generated/runway/anansi/direction-selected-route-1.png",
   exterior: "/generated/runway/anansi/brief-path-through-cedars.png",
   interior: "/generated/runway/anansi/brief-rain-on-glass.png",
@@ -92,8 +93,11 @@ function ImageTile({ src, label, large = false }: { src: string; label?: string;
 }
 
 function PlayTile({ src }: { src: string }) {
+  const isVideo = src.endsWith(".mp4") || src.endsWith(".webm");
+
   return (
     <div className="play-tile" style={{ "--tile-image": `url(${src})` } as CSSProperties}>
+      {isVideo ? <video src={src} muted loop playsInline autoPlay preload="metadata" /> : null}
       <button aria-label="Play clip">
         <PlayIcon />
       </button>
@@ -252,6 +256,7 @@ export default function Home() {
         <div className="video-dash video-dash-left" aria-hidden="true" />
 
         <div className="final-film" style={{ "--tile-image": `url(${heroImages.residence})` } as CSSProperties}>
+          <video src={heroImages.finalVideo} muted loop playsInline autoPlay preload="metadata" />
           <div className="film-toolbar">
             <span>07</span><b>Final output</b>
             <em>0:30</em><i>16:9</i>
@@ -263,7 +268,7 @@ export default function Home() {
         <div className="media-row media-row-right">
           <PlayTile src={heroImages.lounge} />
           <PlayTile src={heroImages.skyline} />
-          <PlayTile src={heroImages.residence} />
+          <PlayTile src={heroImages.finalVideo} />
         </div>
 
         <footer className="hero-footer">
