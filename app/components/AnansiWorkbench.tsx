@@ -124,9 +124,15 @@ function previousStages(stage: DemoStage) {
 }
 
 function MediaFrame({ src, label, tall = false }: { src?: string; label: string; tall?: boolean }) {
+  const isVideo = Boolean(src?.match(/\.(mp4|webm|mov)$/i));
+
   return (
     <div className={tall ? "demo-media demo-media--tall" : "demo-media"}>
-      {src ? <Image src={src} alt={label} fill sizes="(max-width: 900px) 88vw, 36vw" /> : null}
+      {src && isVideo ? (
+        <video src={src} muted loop playsInline autoPlay preload="metadata" aria-label={label} />
+      ) : src ? (
+        <Image src={src} alt={label} fill sizes="(max-width: 900px) 88vw, 36vw" />
+      ) : null}
       <span>{label}</span>
     </div>
   );
@@ -369,7 +375,7 @@ function FinalReview({ project, selectedPath }: { project: Project; selectedPath
       <div className="demo-review-notes">
         <span>Review notes</span>
         <h3>Cinematic. Intentional. On brand.</h3>
-        <p>Approved direction, selected shot path, Runway-ready prompts, and generated clips are now visible in the workbench.</p>
+        <p>Approved direction, selected shot path, Runway-ready prompts, and generated clips are now visible in the workbench. Final output drops into <code>/generated/runway/anansi/final-output.mp4</code>.</p>
         <div>
           {selectedPath.map((shot) => <MediaFrame key={shot.id} src={shot.src} label={shot.title} />)}
         </div>

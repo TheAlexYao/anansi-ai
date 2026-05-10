@@ -57,6 +57,7 @@ export type QueueItem = {
   progress: string;
   src: string;
   duration: string;
+  video_src?: string;
 };
 
 export type Output = {
@@ -69,6 +70,7 @@ export type Output = {
   captions: boolean;
   safe_zones: boolean;
   duration: string;
+  video_src?: string;
 };
 
 export type Project = {
@@ -88,4 +90,11 @@ export type Project = {
   queue_count: number;
   model: string;
   output: Output;
+  asset_drop?: {
+    drive_folder: string;
+    site_folder: string;
+    final_output_path: string;
+    final_output_url: string;
+    note: string;
+  };
 };
