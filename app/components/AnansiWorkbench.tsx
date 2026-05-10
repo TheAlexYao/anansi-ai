@@ -325,13 +325,20 @@ function Storyboard({ project, selected, setSelected, openMedia }: { project: Pr
               <b>{scene.time}</b>
             </header>
             <div>
-              {scene.options.map((option) => (
-                <button className={selected[scene.label] === option.id ? "demo-shot is-selected" : "demo-shot"} key={option.id} onClick={() => setSelected((current) => ({ ...current, [scene.label]: option.id }))}>
-                  <MediaFrame src={option.src} label={option.title} onOpen={() => openMedia({ src: option.src, label: option.title })} />
-                  <strong>{option.id} · {option.title}</strong>
-                  <p>{option.lens} · {option.motion} · {option.duration}</p>
-                </button>
-              ))}
+              {scene.options.map((option) => {
+                const isSelected = selected[scene.label] === option.id;
+                return (
+                  <button className={isSelected ? "demo-shot is-selected" : "demo-shot"} key={option.id} onClick={() => setSelected((current) => ({ ...current, [scene.label]: option.id }))}>
+                    <MediaFrame src={option.src} label={option.title} onOpen={() => openMedia({ src: option.src, label: option.title })} />
+                    <div className="demo-shot-copy">
+                      <span>{isSelected ? "Selected" : "Option"} {option.id}</span>
+                      <strong>{option.title}</strong>
+                      <p>{option.lens} · {option.motion} · {option.duration}</p>
+                    </div>
+                    <i aria-hidden="true">{isSelected ? "✓" : ""}</i>
+                  </button>
+                );
+              })}
             </div>
           </article>
         ))}
