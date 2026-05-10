@@ -4755,3 +4755,119 @@ svg {
   font-size: 13px;
   font-style: normal;
 }
+
+.demo-shot-copy {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.demo-shot-copy span {
+  color: #b59aff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.demo-shot > i {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .demo-scene-list {
+    gap: 14px;
+  }
+
+  .demo-scene-list article {
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .demo-scene-list article > header {
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .demo-scene-list article > div {
+    gap: 10px;
+  }
+
+  .demo-shot {
+    position: relative;
+    grid-template-columns: 104px minmax(0, 1fr) 28px;
+    gap: 10px;
+    align-items: center;
+    padding: 8px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .demo-shot .demo-media {
+    min-height: 76px;
+    border-radius: 11px;
+  }
+
+  .demo-shot .demo-media span,
+  .demo-shot .demo-media-open {
+    display: none;
+  }
+
+  .demo-shot-copy {
+    grid-column: auto;
+  }
+
+  .demo-shot-copy strong {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 1.12;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .demo-shot-copy p {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.25;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .demo-shot > i {
+    display: grid;
+    place-items: center;
+    width: 25px;
+    height: 25px;
+    border: 1px solid rgba(224, 210, 255, 0.24);
+    border-radius: 999px;
+    color: #fbf8ff;
+    font-style: normal;
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .demo-shot.is-selected > i {
+    border-color: rgba(140, 116, 255, 0.88);
+    background: #8c74ff;
+    box-shadow: 0 0 24px rgba(140, 116, 255, 0.34);
+  }
+}
+
+@media (max-width: 380px) {
+  .demo-shot {
+    grid-template-columns: 88px minmax(0, 1fr) 24px;
+  }
+
+  .demo-shot .demo-media {
+    min-height: 68px;
+  }
+}
+
+@media (max-width: 760px) {
+  .demo-scene-list {
+    grid-template-columns: 1fr;
+  }
+}
