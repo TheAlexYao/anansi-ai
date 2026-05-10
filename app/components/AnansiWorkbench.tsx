@@ -3,255 +3,280 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Handle, Position, ReactFlow, type Edge, type Node } from "@xyflow/react";
-import "@xyflow/react/dist/style.css";
-import type { MoodTile, PaletteSwatch, Project, SceneOption } from "../types/project";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Check,
+  ChevronRight,
+  Circle,
+  Clapperboard,
+  Copy,
+  Film,
+  Play,
+  RefreshCcw,
+  Send,
+  Sparkles,
+  Square,
+  WandSparkles,
+  X,
+} from "lucide-react";
+import type { Project, SceneOption } from "../types/project";
 
-const nav = ["Home", "Projects", "Briefs", "Mood", "Scenes", "Edit", "Exports"];
-const library = ["Assets", "References", "Brand Kit", "Settings"];
+type DemoStage = "brief" | "directions" | "storyboard" | "approval" | "render" | "review";
 
-function Icon({ name }: { name: string }) {
-  return <span className={`icon icon-${name}`} aria-hidden="true" />;
-}
-
-function MediaTile({ src, label, className }: { src?: string; label?: string; className?: string }) {
-  const classes = ["mediaTile", className, src ? "hasImage" : "mediaTile-fallback"].filter(Boolean).join(" ");
-  return (
-    <div className={classes} aria-label={label}>
-      {src ? <Image src={src} alt={label ?? ""} fill sizes="(max-width: 760px) 92vw, (max-width: 1180px) 44vw, 34vw" /> : null}
-      <span />
-      <i />
-      <b />
-    </div>
-  );
-}
-
-function PaletteTile({ palette }: { palette: PaletteSwatch[] }) {
-  return (
-    <div className="mediaTile paletteTile">
-      {palette.map((swatch) => (
-        <div className="swatchRow" key={swatch.name}>
-          <span>{swatch.name}</span>
-          <i style={{ ["--swatch" as string]: swatch.hex }} />
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function SketchTile({ themes }: { themes: string[] }) {
-  return (
-    <div className="mediaTile sketchTile">
-      <div className="sketchFrame" />
-      <div className="sketchPerson" />
-      <p>
-        {themes.map((line, index) => (
-          <span key={line}>
-            {line}
-            {index < themes.length - 1 ? <br /> : null}
-          </span>
-        ))}
-      </p>
-    </div>
-  );
-}
-
-function MoodTileRender({ tile, palette, themes }: { tile: MoodTile; palette: PaletteSwatch[]; themes: string[] }) {
-  if (tile.kind === "palette") return <PaletteTile palette={palette} />;
-  if (tile.kind === "sketch") return <SketchTile themes={themes} />;
-  return <MediaTile src={tile.src} label={tile.label} />;
-}
-
-function Strength({ value }: { value: string }) {
-  return <span className="strength"><i style={{ width: `${Number(value) * 100}%` }} /></span>;
-}
-
-function SceneNode() {
-  return (
-    <span className="flowPort">
-      <Handle type="target" position={Position.Left} />
-      <Handle type="source" position={Position.Right} />
-    </span>
-  );
-}
-
-function BranchNode() {
-  return (
-    <span className="flowBranch">
-      <Handle type="target" position={Position.Left} />
-      <Handle type="source" position={Position.Right} />
-      +
-    </span>
-  );
-}
-
-const sceneNodeTypes = {
-  port: SceneNode,
-  branch: BranchNode
+type HermesEvent = {
+  id: string;
+  event: "message.delta" | "tool.started" | "tool.completed" | "run.completed";
+  title: string;
+  body: string;
+  status: "live" | "done" | "queued";
 };
 
-const sceneFlowNodes: Node[] = [
-  { id: "1AOut", type: "port", position: { x: 235, y: 34 }, data: {} },
-  { id: "1BOut", type: "port", position: { x: 235, y: 122 }, data: {} },
-  { id: "J1", type: "branch", position: { x: 257, y: 70 }, data: {} },
-  { id: "2AIn", type: "port", position: { x: 280, y: 34 }, data: {} },
-  { id: "2BIn", type: "port", position: { x: 280, y: 122 }, data: {} },
-  { id: "2AOut", type: "port", position: { x: 512, y: 34 }, data: {} },
-  { id: "2BOut", type: "port", position: { x: 512, y: 122 }, data: {} },
-  { id: "J2", type: "branch", position: { x: 534, y: 70 }, data: {} },
-  { id: "3AIn", type: "port", position: { x: 557, y: 34 }, data: {} },
-  { id: "3BIn", type: "port", position: { x: 557, y: 122 }, data: {} }
-];
+const stageCopy: Record<DemoStage, { eyebrow: string; title: string; body: string; action: string }> = {
+  brief: {
+    eyebrow: "01 / Brief intake",
+    title: "Set the brief.",
+    body: "Confirm the creative intent before anything is generated.",
+    action: "Generate directions",
+  },
+  directions: {
+    eyebrow: "02 / Creative directions",
+    title: "Choose the route.",
+    body: "Pick the direction you want Anansi to storyboard.",
+    action: "Build storyboard",
+  },
+  storyboard: {
+    eyebrow: "03 / Storyboard and shot list",
+    title: "Pick the shots.",
+    body: "Choose one option for each scene.",
+    action: "Send for approval",
+  },
+  approval: {
+    eyebrow: "04 / Human approval",
+    title: "Approve the path.",
+    body: "Lock the direction before Runway render.",
+    action: "Approve direction",
+  },
+  render: {
+    eyebrow: "05 / Runway render queue",
+    title: "Render the clips.",
+    body: "Approved shots move into generation.",
+    action: "Review outputs",
+  },
+  review: {
+    eyebrow: "06 / Final review",
+    title: "Review the cut.",
+    body: "Inspect generated media and the final direction summary.",
+    action: "Restart demo",
+  },
+};
 
-const sceneFlowEdges: Edge[] = [
-  { id: "1A-J1", source: "1AOut", target: "J1", type: "straight", className: "selectedEdge" },
-  { id: "1B-J1", source: "1BOut", target: "J1", type: "straight", className: "alternateEdge" },
-  { id: "J1-2A", source: "J1", target: "2AIn", type: "straight", className: "alternateEdge" },
-  { id: "J1-2B", source: "J1", target: "2BIn", type: "straight", className: "selectedEdge" },
-  { id: "2A-J2", source: "2AOut", target: "J2", type: "straight", className: "alternateEdge" },
-  { id: "2B-J2", source: "2BOut", target: "J2", type: "straight", className: "selectedEdge" },
-  { id: "J2-3A", source: "J2", target: "3AIn", type: "straight", className: "alternateEdge" },
-  { id: "J2-3B", source: "J2", target: "3BIn", type: "straight", className: "selectedEdge" }
-].map((edge) => ({
-  ...edge,
-  focusable: false
-}));
+const stageOrder: DemoStage[] = ["brief", "directions", "storyboard", "approval", "render", "review"];
 
-function Sidebar() {
+const stageLabels: Record<DemoStage, string> = {
+  brief: "Brief",
+  directions: "Direction",
+  storyboard: "Shots",
+  approval: "Approval",
+  render: "Render",
+  review: "Review",
+};
+
+const eventBatches: Record<DemoStage, HermesEvent[]> = {
+  brief: [
+    { id: "brief-1", event: "message.delta", title: "Waiting for brief", body: "Anansi is ready for product, audience, location, tone, and constraints.", status: "live" },
+  ],
+  directions: [
+    { id: "dir-1", event: "tool.started", title: "Analyze brief", body: "Reading product, audience, references, and outcome.", status: "done" },
+    { id: "dir-2", event: "message.delta", title: "Direction board", body: "Creating three cinematic routes from the same brand truth.", status: "live" },
+    { id: "dir-3", event: "tool.completed", title: "Directions ready", body: "Three routes prepared for human selection.", status: "queued" },
+  ],
+  storyboard: [
+    { id: "story-1", event: "tool.started", title: "Scene Weaver", body: "Translating approved direction into scenes and shot options.", status: "done" },
+    { id: "story-2", event: "message.delta", title: "Camera language", body: "Adding lens, motion, timing, and continuity notes.", status: "live" },
+    { id: "story-3", event: "tool.completed", title: "Storyboard ready", body: "Six shot options are ready for approval.", status: "queued" },
+  ],
+  approval: [
+    { id: "app-1", event: "message.delta", title: "Approval checkpoint", body: "Waiting for Sofia to approve or request refinement.", status: "live" },
+    { id: "app-2", event: "tool.completed", title: "Human decision", body: "Direction 01 and selected shot path approved.", status: "queued" },
+  ],
+  render: [
+    { id: "ren-1", event: "tool.started", title: "Hermes prepares prompts", body: "Structuring Runway-ready tasks from the approved shot path.", status: "done" },
+    { id: "ren-2", event: "message.delta", title: "Runway generation", body: "Rendering three selected clips with motion and visual constraints.", status: "live" },
+    { id: "ren-3", event: "tool.completed", title: "Clips returned", body: "Generated outputs are available for review.", status: "queued" },
+  ],
+  review: [
+    { id: "rev-1", event: "run.completed", title: "Final review ready", body: "Anansi has the direction summary, generated clips, and export state.", status: "done" },
+  ],
+};
+
+function nextStage(stage: DemoStage): DemoStage {
+  const current = stageOrder.indexOf(stage);
+  return stageOrder[(current + 1) % stageOrder.length];
+}
+
+function stageIndex(stage: DemoStage) {
+  return stageOrder.indexOf(stage);
+}
+
+function previousStages(stage: DemoStage) {
+  return stageOrder.slice(0, stageIndex(stage));
+}
+
+function MediaFrame({ src, label, tall = false }: { src?: string; label: string; tall?: boolean }) {
   return (
-    <aside className="rail">
-      <Link href="/" className="brandLockup" aria-label="Anansi home"><Image src="/mark-light.jpg" alt="" width={28} height={28} priority className="brandLockup__mark" />ANANSI</Link>
-      <nav className="navGroup" aria-label="Main sections">
-        {nav.map((item) => <a className={item === "Mood" ? "navItem active" : "navItem"} href="#" key={item}><Icon name={item.toLowerCase()} />{item}</a>)}
-      </nav>
-      <nav className="navGroup utility" aria-label="Project library">
-        {library.map((item) => <a className="navItem" href="#" key={item}><Icon name={item.toLowerCase().replace(" ", "-")} />{item}</a>)}
-      </nav>
-      <div className="operator"><span /> <div><strong>Adrian Okoro</strong><small>Studio Black Thread</small></div><Icon name="chevron" /></div>
+    <div className={tall ? "demo-media demo-media--tall" : "demo-media"}>
+      {src ? <Image src={src} alt={label} fill sizes="(max-width: 900px) 88vw, 36vw" /> : null}
+      <span>{label}</span>
+    </div>
+  );
+}
+
+function StatusGlyph({ status }: { status: HermesEvent["status"] }) {
+  if (status === "done") return <Check aria-hidden="true" />;
+  if (status === "live") return <Sparkles aria-hidden="true" />;
+  return <Circle aria-hidden="true" />;
+}
+
+function activityLabel(event: HermesEvent["event"]) {
+  if (event === "tool.started") return "Working";
+  if (event === "tool.completed") return "Ready";
+  if (event === "run.completed") return "Complete";
+  return "Thinking";
+}
+
+function ActivityRail({ events }: { events: HermesEvent[] }) {
+  return (
+    <aside className="demo-activity">
+      <span>Activity</span>
+      <div className="demo-event-list" aria-live="polite">
+        {events.map((item) => (
+          <article className={`demo-event demo-event--${item.status}`} key={item.id}>
+            <i><StatusGlyph status={item.status} /></i>
+            <div>
+              <span>{activityLabel(item.event)}</span>
+              <strong>{item.title}</strong>
+              <p>{item.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
     </aside>
   );
 }
 
-function Topbar({ title }: { title: string }) {
+function BriefComposer({ project }: { project: Project }) {
   return (
-    <header className="topbar">
-      <div className="breadcrumbs"><span>Projects</span><b>/</b><button>{title} <Icon name="chevron" /></button></div>
-      <nav className="tabs" aria-label="Workflow">
-        {["Brief", "Mood", "Scenes", "Edit"].map((tab) => <a className={tab === "Brief" ? "selected" : ""} href="#" key={tab}>{tab}</a>)}
-      </nav>
-      <div className="actions"><button aria-label="Undo"><Icon name="undo" /></button><button aria-label="Redo"><Icon name="redo" /></button><button><Icon name="share" />Share</button><button className="export">Export</button></div>
-    </header>
-  );
-}
-
-function BriefPanel({ project }: { project: Project }) {
-  const { brief } = project;
-  const referenceLines = brief.reference.split(/\s*\+\s*/);
-  return (
-    <section className="briefPanel panel">
-      <header><h2>BRIEF</h2><button>Edit</button></header>
-      <dl>
-        <div><dt>Product</dt><dd>{brief.product}</dd></div>
-        <div><dt>Feeling</dt><dd>{brief.feeling}</dd></div>
-        <div><dt>Reference</dt><dd>{referenceLines.map((line, index) => (
-          <span key={line}>{line}{index < referenceLines.length - 1 ? <br /> : null}</span>
-        ))}</dd></div>
-      </dl>
-      <div className="controlStack">
-        <label><span>Reference weight</span><b>{brief.reference_weight}%</b></label>
-        <div className="range"><i style={{ width: `${brief.reference_weight}%` }} /></div>
-        <label><span>Story tension</span><b>{brief.story_tension}%</b></label>
-        <div className="range"><i style={{ width: `${brief.story_tension}%` }} /></div>
+    <section className="demo-card demo-card--brief demo-brief">
+      <div className="brief-desk">
+        <div className="brief-sheet">
+          <header>
+            <span>Brand/product brief</span>
+            <button><Copy size={15} /> Import</button>
+          </header>
+          <label>
+            Product
+            <textarea defaultValue={`${project.brief.product}\n\nA cinematic fundraising film for a design-forward property launch.`} />
+          </label>
+          <div className="demo-field-grid">
+            <label>Audience<input defaultValue="Investors, guests, creative partners" /></label>
+            <label>Location<input defaultValue="Forest property, twilight interiors" /></label>
+            <label>Tone<input defaultValue={project.brief.feeling} /></label>
+            <label>Outcome<input defaultValue="30s approval-ready brand film" /></label>
+          </div>
+        </div>
+        <aside className="brief-intent">
+          <span>Producer intent</span>
+          <h2>Creative intent before generation.</h2>
+          <p>References become constraints for pacing, palette, framing, and emotional temperature.</p>
+          <div className="brief-intent-grid">
+            <div><b>{project.brief.reference_weight}%</b><small>reference weight</small></div>
+            <div><b>{project.brief.story_tension}%</b><small>story tension</small></div>
+          </div>
+          <div className="brief-intent-note">Human approval stays on before Runway render.</div>
+        </aside>
       </div>
-      <div className="toggleRow"><span>Human approval</span><b>{brief.human_approval ? "On" : "Off"}</b><button aria-label={`Human approval ${brief.human_approval ? "on" : "off"}`}><i /></button></div>
-    </section>
-  );
-}
-
-function MoodPanel({ project }: { project: Project }) {
-  const { mood } = project;
-  return (
-    <section className="moodPanel panel">
-      <header className="sectionHeader">
-        <div><h1>{mood.title} <span>i</span></h1><p>{mood.subtitle}</p></div>
-        <div className="viewTools"><Icon name="grid" /><Icon name="sliders" /><button><Icon name="plus" />Add reference</button></div>
-      </header>
-      <div className="moodBoard">
-        {mood.tiles.map((tile, index) => (
-          <MoodTileRender key={index} tile={tile} palette={mood.palette} themes={mood.themes} />
+      <div className="demo-reference-row">
+        {project.mood.tiles.filter((tile) => tile.kind === "image").slice(0, 3).map((tile) => (
+          <MediaFrame key={tile.label} src={tile.src} label={tile.label} />
         ))}
       </div>
     </section>
   );
 }
 
-function StoryPanel({ project, direction, setDirection }: { project: Project; direction: string; setDirection: (direction: string) => void }) {
-  const activeDirection = project.directions.find((item) => item.id === direction) ?? project.directions[0];
+function DirectionBoard({ project, selectedDirection, setSelectedDirection }: { project: Project; selectedDirection: string; setSelectedDirection: (id: string) => void }) {
+  const active = project.directions.find((direction) => direction.id === selectedDirection) ?? project.directions[0];
+  const images = project.mood.tiles.filter((tile) => tile.kind === "image");
   return (
-    <aside className="storyPanel panel">
-      <header><h2>STORY WEAVER</h2><span>AI co-producer</span></header>
-      <p>I’ve woven your brief and references into three cinematic directions.</p>
-      <div className="directionList">
-        {project.directions.map((item) => (
-          <button className={item.id === direction ? "direction selected" : "direction"} key={item.id} onClick={() => setDirection(item.id)}>
-            <span>{item.id}</span><div><strong>{item.title}</strong><small>{item.body}</small></div><i />
+    <section className="demo-card demo-card--directions demo-directions">
+      <header>
+        <span>Creative direction options</span>
+        <b>Human chooses one</b>
+      </header>
+      <div className="direction-feature">
+        <MediaFrame src={images[0]?.src} label={active.title} tall />
+        <div>
+          <span>Selected route {active.id}</span>
+          <h2>{active.title}</h2>
+          <p>{active.body}</p>
+          <ul>
+            <li>Visual world: cedar, mist, glass, low interior warmth</li>
+            <li>Camera: slow push, held frames, quiet reveal</li>
+            <li>Outcome: premium stakeholder film, not social filler</li>
+          </ul>
+        </div>
+      </div>
+      <div className="demo-direction-grid">
+        {project.directions.map((direction, index) => (
+          <button className={direction.id === selectedDirection ? "demo-direction is-selected" : "demo-direction"} key={direction.id} onClick={() => setSelectedDirection(direction.id)}>
+            <MediaFrame src={images[index + 1]?.src ?? images[index]?.src} label={direction.tone} />
+            <span>{direction.id}</span>
+            <strong>{direction.title}</strong>
+            <p>{direction.body}</p>
           </button>
         ))}
       </div>
-      <div className="tonePicker">
-        <span>Tone</span>
-        {project.tone_chips.map((tone) => <button className={tone === activeDirection.tone ? "active" : ""} key={tone}>{tone}</button>)}
-      </div>
-      <div className="pacing">
-        <label><span>Pacing</span><b>Measured</b><b>Propulsive</b></label>
-        <div className="range"><i style={{ width: `${project.pacing}%` }} /></div>
-      </div>
-      <button className="applyButton">Apply direction to scenes</button>
-    </aside>
+    </section>
   );
 }
 
-function ScenePanel({ project, selected, selectedPath, setSelected }: { project: Project; selected: Record<string, string>; selectedPath: SceneOption[]; setSelected: React.Dispatch<React.SetStateAction<Record<string, string>>> }) {
+function Storyboard({ project, selected, setSelected }: { project: Project; selected: Record<string, string>; setSelected: React.Dispatch<React.SetStateAction<Record<string, string>>> }) {
   return (
-    <section className="scenePanel panel" aria-label={`Selected scene path ${selectedPath.map((shot) => shot.id).join(" to ")}`}>
-      <header className="sectionHeader compact">
-        <div><h2>SCENE WEAVE</h2><p>Branching narrative. Choose the path.</p></div>
-        <div className="sceneTools"><span><i />Board</span><span><Icon name="timeline" />Timeline</span><button><Icon name="plus" />Add scene</button></div>
+    <section className="demo-card demo-card--storyboard demo-storyboard">
+      <header>
+        <span>Storyboard / shot list</span>
+        <b>2 options per scene</b>
       </header>
-      <div className="sceneColumns">
-        <div className="sceneFlow" aria-hidden="true">
-          <ReactFlow
-            nodes={sceneFlowNodes}
-            edges={sceneFlowEdges}
-            nodeTypes={sceneNodeTypes}
-            style={{ width: "100%", height: "100%" }}
-            fitView={false}
-            nodesDraggable={false}
-            nodesConnectable={false}
-            elementsSelectable={false}
-            panOnDrag={false}
-            zoomOnScroll={false}
-            zoomOnDoubleClick={false}
-            zoomOnPinch={false}
-            preventScrolling={false}
-          />
-        </div>
+      <div className="storyboard-strip">
+        {project.scenes.map((scene) => {
+          const chosen = scene.options.find((option) => option.id === selected[scene.label]) ?? scene.options[0];
+          return (
+            <article key={scene.id}>
+              <MediaFrame src={chosen.src} label={chosen.title} />
+              <span>{scene.time}</span>
+              <strong>{scene.label}: {chosen.title}</strong>
+              <p>{chosen.lens} / {chosen.motion}</p>
+            </article>
+          );
+        })}
+      </div>
+      <div className="demo-scene-list">
         {project.scenes.map((scene) => (
-          <article className="sceneColumn" key={scene.label}>
-            <header><strong>{scene.label}</strong><span>{scene.time}</span></header>
-            {scene.options.map((option) => (
-              <button className={selected[scene.label] === option.id ? "shot selected" : "shot"} key={option.id} onClick={() => setSelected((current) => ({ ...current, [scene.label]: option.id }))}>
-                <span className="radio" />
-                <MediaTile src={option.src} label={option.title} />
-                <div className="shotCopy">
-                  <h3><b>{option.id}</b>{option.title}</h3>
-                  <p><span>Lens</span>{option.lens}</p>
-                  <p><span>Motion</span>{option.motion}</p>
-                  <p><span>Duration</span>{option.duration}</p>
-                  <p><span>Prompt strength</span>{option.strength}<Strength value={option.strength} /></p>
-                </div>
-              </button>
-            ))}
+          <article key={scene.id}>
+            <header>
+              <span>{scene.label}</span>
+              <b>{scene.time}</b>
+            </header>
+            <div>
+              {scene.options.map((option) => (
+                <button className={selected[scene.label] === option.id ? "demo-shot is-selected" : "demo-shot"} key={option.id} onClick={() => setSelected((current) => ({ ...current, [scene.label]: option.id }))}>
+                  <MediaFrame src={option.src} label={option.title} />
+                  <strong>{option.id} · {option.title}</strong>
+                  <p>{option.lens} · {option.motion} · {option.duration}</p>
+                </button>
+              ))}
+            </div>
           </article>
         ))}
       </div>
@@ -259,71 +284,222 @@ function ScenePanel({ project, selected, selectedPath, setSelected }: { project:
   );
 }
 
-function QueuePanel({ project }: { project: Project }) {
+function ApprovalPanel({ approved, selectedPath, setApproved }: { approved: boolean; selectedPath: SceneOption[]; setApproved: (approved: boolean) => void }) {
   return (
-    <section className="queuePanel panel">
-      <header><h2>RUNWAY QUEUE</h2><span>{project.queue_count} in progress</span><button>Connect</button><select aria-label="Runway model" defaultValue={project.model}><option value={project.model}>{project.model}</option></select><Icon name="spark" /></header>
-      <div className="queueStrip">
-        {project.queue.map((item) => (
-          <article className="queueCard" key={item.id}>
-            <MediaTile src={item.src} label={item.id} />
-            <header><span className={`queueStatus ${item.status.toLowerCase().replace(" ", "-")}`}>{item.status}</span><b>{item.progress || "○"}</b></header>
-            <footer><span>{item.id}</span><b>{item.duration}</b></footer>
-            {item.progress ? <div className="progress"><i style={{ width: item.progress }} /></div> : null}
-          </article>
-        ))}
+    <section className="demo-card demo-card--approval demo-approval">
+      <header>
+        <span>Approval checkpoint</span>
+        <b>Producer remains in control</b>
+      </header>
+      <div className="approval-stage">
+        <div>
+          <div className="demo-people">
+            <Image src="/generated/profiles/anansi-approval/sofia-delgado.png" alt="Sofia Delgado" width={54} height={54} />
+            <Image src="/generated/profiles/anansi-approval/marcus-chen.png" alt="Marcus Chen" width={54} height={54} />
+            <Image src="/generated/profiles/anansi-approval/amara-okafor.png" alt="Amara Okafor" width={54} height={54} />
+            <Image src="/generated/profiles/anansi-approval/theo-laurent.png" alt="Theo Laurent" width={54} height={54} />
+          </div>
+          <blockquote>“This is the route. Keep the pacing quiet, but make the property feel inevitable.”</blockquote>
+          <div className="demo-approval-actions">
+            <button className={approved ? "is-primary is-confirmed" : "is-primary"} onClick={() => setApproved(true)}>
+              <BadgeCheck size={18} /> {approved ? "Approved" : "Approve"}
+            </button>
+            <button><RefreshCcw size={18} /> Refine</button>
+            <button><WandSparkles size={18} /> Regenerate</button>
+            <button onClick={() => setApproved(false)}><X size={18} /> Reject</button>
+          </div>
+        </div>
+        <aside>
+          <span>Approved path</span>
+          <div className="demo-approved-path">
+            {selectedPath.map((shot) => <b key={shot.id}>{shot.id}</b>)}
+          </div>
+          {selectedPath.map((shot) => (
+            <p key={shot.id}><strong>{shot.id}</strong>{shot.title}</p>
+          ))}
+        </aside>
       </div>
     </section>
   );
 }
 
-function OutputPanel({ project }: { project: Project }) {
-  const { output } = project;
-  const [primary, accent, ...rest] = output.poster_lines;
+function RenderQueue({ selectedPath, active }: { selectedPath: SceneOption[]; active: boolean }) {
   return (
-    <aside className="outputPanel">
-      <header><h2>{output.title}</h2><span>{output.subtitle}</span><b>{output.format_label}</b></header>
-      <div className="outputBody">
-        <div className="poster">
-          <MediaTile src={output.poster_src} label={output.title} />
-          <strong>{primary}<br /><span>{[accent, ...rest].filter(Boolean).join(" ")}</span></strong>
-          <footer><Icon name="play" /><span>0:00 / {output.duration}</span><Icon name="expand" /></footer>
-        </div>
-        <div className="exportControls">
-          <label>Audio<select defaultValue={output.audio_label}><option value={output.audio_label}>{output.audio_label}</option></select></label>
-          <div className="waveform">{Array.from({ length: 44 }).map((_, index) => <i key={index} style={{ height: `${18 + ((index * 13) % 36)}px` }} />)}</div>
-          <div className="exportToggle"><span>Captions</span><b>{output.captions ? "On" : "Off"}</b><button><i /></button></div>
-          <div className="exportToggle"><span>Safe zones</span><b>{output.safe_zones ? "On" : "Off"}</b><button><i /></button></div>
-          <button className="editButton"><Icon name="share" />Open in Edit</button>
+    <section className="demo-card demo-card--render demo-render">
+      <header>
+        <span>Runway generation</span>
+        <b>{active ? "Rendering via approved prompts" : "Locked until approval"}</b>
+      </header>
+      <div className="render-command">
+        <span>Hermes handoff</span>
+        <code>approved_shots → prompt_tasks → runway_queue</code>
+      </div>
+      <div className="demo-render-grid">
+        {selectedPath.map((shot, index) => (
+          <article className={active ? "demo-render-card is-active" : "demo-render-card"} key={shot.id}>
+            <MediaFrame src={shot.src} label={shot.title} />
+            <div>
+              <span>Shot {shot.id}</span>
+              <strong>{shot.motion}</strong>
+              <p>{active ? `Runway task ${index + 1} · ${index === 2 ? "complete" : "rendering"}` : "Waiting for approval"}</p>
+            </div>
+            <i style={{ width: active ? `${58 + index * 18}%` : "8%" }} />
+          </article>
+        ))}
+      </div>
+      <footer>
+        <code>runway-pp-cli image-to-video create --agent --json</code>
+      </footer>
+    </section>
+  );
+}
+
+function FinalReview({ project, selectedPath }: { project: Project; selectedPath: SceneOption[] }) {
+  return (
+    <section className="demo-card demo-card--final demo-final">
+      <div className="demo-final-film">
+        <MediaFrame src={project.output.poster_src} label={project.output.title} tall />
+        <button aria-label="Play final film"><Play size={24} fill="currentColor" /></button>
+        <footer>
+          <span>FINAL FILM</span>
+          <b>{project.output.duration}</b>
+          <em>{project.output.format_label}</em>
+        </footer>
+      </div>
+      <div className="demo-review-notes">
+        <span>Review notes</span>
+        <h3>Cinematic. Intentional. On brand.</h3>
+        <p>Approved direction, selected shot path, Runway-ready prompts, and generated clips are now visible in the workbench.</p>
+        <div>
+          {selectedPath.map((shot) => <MediaFrame key={shot.id} src={shot.src} label={shot.title} />)}
         </div>
       </div>
-    </aside>
+    </section>
   );
 }
 
 export function AnansiWorkbench({ project }: { project: Project }) {
-  const [direction, setDirection] = useState(project.selected_direction);
+  const [stage, setStage] = useState<DemoStage>("brief");
+  const [selectedDirection, setSelectedDirection] = useState(project.selected_direction);
   const [selected, setSelected] = useState<Record<string, string>>(project.selected_scenes);
+  const [approved, setApproved] = useState(false);
+  const [maxUnlockedIndex, setMaxUnlockedIndex] = useState(0);
 
   const selectedPath = useMemo(
     () => project.scenes.map((scene) => scene.options.find((option) => option.id === selected[scene.label]) ?? scene.options[0]),
     [selected, project.scenes]
   );
 
+  const index = stageIndex(stage);
+  const activeCopy = stageCopy[stage];
+  const selectedCount = project.scenes.filter((scene) => selected[scene.label]).length;
+  const allShotsSelected = selectedCount === project.scenes.length;
+  const canAdvance =
+    stage === "brief" ||
+    (stage === "directions" && Boolean(selectedDirection)) ||
+    (stage === "storyboard" && allShotsSelected) ||
+    (stage === "approval" && approved) ||
+    stage === "render" ||
+    stage === "review";
+  const blocker =
+    stage === "directions" && !selectedDirection
+      ? "Choose a direction first"
+      : stage === "storyboard" && !allShotsSelected
+        ? `Choose ${project.scenes.length - selectedCount} more shot${project.scenes.length - selectedCount === 1 ? "" : "s"}`
+        : stage === "approval" && !approved
+          ? "Approve the shot path first"
+          : "";
+  const primaryAction =
+    stage === "approval"
+      ? approved ? activeCopy.action : "Approve for Runway"
+      : activeCopy.action;
+
+  function advance() {
+    if (stage === "review") {
+      setStage("brief");
+      setMaxUnlockedIndex(0);
+      setApproved(false);
+      return;
+    }
+    if (stage === "approval" && !approved) {
+      setApproved(true);
+      return;
+    }
+    if (!canAdvance) return;
+    const next = nextStage(stage);
+    const nextIndex = stageIndex(next);
+    setMaxUnlockedIndex((current) => Math.max(current, nextIndex));
+    setStage(next);
+  }
+
   return (
-    <main className="anansiWorkspace">
-      <Sidebar />
-      <section className="workbench">
-        <Topbar title={project.title} />
-        <div className="mainGrid">
-          <BriefPanel project={project} />
-          <MoodPanel project={project} />
-          <StoryPanel project={project} direction={direction} setDirection={setDirection} />
-          <ScenePanel project={project} selected={selected} selectedPath={selectedPath} setSelected={setSelected} />
-          <QueuePanel project={project} />
-          <OutputPanel project={project} />
-        </div>
+    <main className={`demo-workbench demo-workbench--${stage}`}>
+      <header className="demo-topbar">
+        <Link href="/" className="demo-brand">
+          <Image src="/anansi-spider-mark.png" alt="" width={34} height={34} />
+          <span>Anansi</span>
+        </Link>
+        <nav aria-label="Demo stages">
+          {stageOrder.map((item, itemIndex) => (
+            <button
+              className={item === stage ? "is-active" : itemIndex < index ? "is-complete" : itemIndex > maxUnlockedIndex ? "is-locked" : ""}
+              disabled={itemIndex > maxUnlockedIndex}
+              key={item}
+              onClick={() => setStage(item)}
+            >
+              {itemIndex < index ? <Check size={14} /> : <Square size={12} />}
+              {stageLabels[item]}
+            </button>
+          ))}
+        </nav>
+        <button className="demo-topbar-action" disabled={!canAdvance && !(stage === "approval" && !approved)} onClick={advance}>
+          {primaryAction}
+          <ArrowRight size={17} />
+        </button>
+      </header>
+
+      <section className="demo-stage-frame">
+        <aside className="demo-hero">
+          <div>
+            <span>{activeCopy.eyebrow}</span>
+            <h1>{activeCopy.title}</h1>
+            <p>{activeCopy.body}</p>
+          </div>
+          {previousStages(stage).length ? (
+            <div className="demo-decision-summary">
+              <span>Selected</span>
+              {previousStages(stage).includes("directions") ? <p><b>Direction</b>{project.directions.find((item) => item.id === selectedDirection)?.title}</p> : null}
+              {previousStages(stage).includes("storyboard") ? <p><b>Shots</b>{selectedPath.map((shot) => shot.id).join(" / ")}</p> : null}
+              {previousStages(stage).includes("approval") ? <p><b>Approval</b>{approved ? "Approved for Runway" : "Pending"}</p> : null}
+            </div>
+          ) : null}
+          <div className="demo-stage-meter">
+            <i style={{ width: `${((index + 1) / stageOrder.length) * 100}%` }} />
+          </div>
+          <ActivityRail events={eventBatches[stage]} />
+        </aside>
+
+        <section className="demo-layout">
+          <div className="demo-main">
+            {stage === "brief" ? <BriefComposer project={project} /> : null}
+            {stage === "directions" ? <DirectionBoard project={project} selectedDirection={selectedDirection} setSelectedDirection={setSelectedDirection} /> : null}
+            {stage === "storyboard" ? <Storyboard project={project} selected={selected} setSelected={setSelected} /> : null}
+            {stage === "approval" ? <ApprovalPanel approved={approved} selectedPath={selectedPath} setApproved={setApproved} /> : null}
+            {stage === "render" ? <RenderQueue selectedPath={selectedPath} active /> : null}
+            {stage === "review" ? <FinalReview project={project} selectedPath={selectedPath} /> : null}
+          </div>
+        </section>
       </section>
+
+      <footer className="demo-footer">
+        <span><Clapperboard size={16} /> Public Anansi product</span>
+        <ChevronRight size={15} />
+        <span><Sparkles size={16} /> Hermes workflow events</span>
+        <ChevronRight size={15} />
+        <span><Film size={16} /> Runway generation</span>
+        {blocker ? <em>{blocker}</em> : null}
+        <button disabled={!canAdvance && !(stage === "approval" && !approved)} onClick={advance}><Send size={16} /> {primaryAction}</button>
+      </footer>
     </main>
   );
 }
