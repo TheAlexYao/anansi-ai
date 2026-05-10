@@ -269,7 +269,7 @@ export default function Home() {
         <footer className="hero-footer">
           <div className="footer-brand">
             <span className="footer-mark" />
-            <p>Anansi orchestrates the messy middle<br />between creative intent and AI generation.</p>
+            <p>From brief to approved render,<br />Anansi keeps the creative process human-led.</p>
           </div>
           <p className="brand-line">Memory. Taste. Approval. Handoff.</p>
           <div className="footer-cta">
