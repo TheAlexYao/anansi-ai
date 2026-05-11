@@ -148,6 +148,7 @@ export default function Home() {
             <a href="#pricing">Pricing</a>
             <a href="#about">About</a>
             <a href="#resources">Resources</a>
+            <Link href="/docs">Docs</Link>
           </nav>
           <div className="nav-actions">
             <button type="button" className="login-link install-link" onClick={() => setInstallOpen(true)}>Install locally</button>
