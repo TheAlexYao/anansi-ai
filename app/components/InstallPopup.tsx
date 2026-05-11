@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const command = "npx anansi-ai connect";
@@ -45,6 +46,9 @@ export function InstallPopup({ open, onClose }: { open: boolean; onClose: () => 
           <div><b>Runs with</b><span>Claude Code, Hermes, OpenClaw, Codex</span></div>
           <div><b>Generates through</b><span>Runway API, with your own key</span></div>
         </div>
+        <p className="install-popup__docs">
+          New here? <Link href="/docs" onClick={onClose}>Read the docs →</Link>
+        </p>
       </section>
     </div>
   );
