@@ -292,7 +292,7 @@ export default function Home() {
         <div className="media-row media-row-right">
           <PlayTile src={heroImages.lounge} />
           <PlayTile src={heroImages.skyline} />
-          <PlayTile src={heroImages.finalVideo} onPlay={() => setVideoOpen(true)} />
+          <PlayTile src={heroImages.material} />
         </div>
 
         <footer className="hero-footer">
