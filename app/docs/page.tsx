@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -36,7 +37,14 @@ export default function DocsPage() {
 
       <header className="docs-topbar">
         <Link href="/" className="docs-brand">
-          <span className="docs-brand-mark" aria-hidden="true">A</span>
+          <Image
+            src="/anansi-spider-mark.png"
+            alt=""
+            width={28}
+            height={28}
+            className="docs-brand-mark"
+            priority
+          />
           <span>Anansi</span>
         </Link>
         <nav className="docs-nav" aria-label="Sections">

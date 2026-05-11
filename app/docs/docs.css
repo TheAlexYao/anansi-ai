@@ -66,17 +66,10 @@
 }
 
 .docs-brand-mark {
-  display: inline-flex;
-  width: 26px;
-  height: 26px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #bda6e9 0%, #e1c6d0 60%, #a887dd 100%);
-  color: #1a1230;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: var(--font-display, "Times New Roman", serif);
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .docs-nav {
