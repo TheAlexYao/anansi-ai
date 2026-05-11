@@ -26,11 +26,8 @@ Keep human judgment central. Do not present Anansi as fully automated content sp
 
 ## Source Routing
 
-- Raw Granola transcripts: `/Users/alexyao/brain/meetings`
-- Durable cross-project memory: `/Users/alexyao/brain/projects/anansi-ai.md`
-- Active creative planning: `/Users/alexyao/vaults/creative/now.md`
 - Implementation and product behavior: this repo
-- Runway CLI/tooling source: `/Users/alexyao/printing-press/library/runway`
+- Local notes, transcripts, and creative planning live outside the repo on the maintainer's machine
 
 When extracting meeting notes, do not paste huge transcript summaries into this repo. Add only decisions, product requirements, prompt constraints, open questions, and next build tasks.
 
@@ -57,5 +54,5 @@ Before using Runway, confirm the required environment variable is present in the
 - Prefer implementing the next reversible step over writing a large plan.
 - If adding structure, keep it small and tied to a concrete delivery need.
 - If using generated assets, record the prompt and task metadata in `data/runway/`.
-- If changing the product direction based on a meeting, update `/Users/alexyao/brain/projects/anansi-ai.md` or `/Users/alexyao/vaults/creative/now.md` as appropriate.
+- If changing the product direction based on a meeting, update local maintainer notes outside the repo rather than committing them here.
 - Do not overwrite generated media outputs unless the filename is clearly temporary.

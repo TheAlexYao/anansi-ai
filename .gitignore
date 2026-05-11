@@ -22,3 +22,5 @@ public/generated/runway/*
 .codex-screenshots/
 .vercel
 tsconfig.tsbuildinfo
+
+public/brand/_history.jsonl
