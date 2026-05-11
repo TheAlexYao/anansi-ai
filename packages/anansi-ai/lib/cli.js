@@ -6,7 +6,7 @@ const path = require("path");
 const cp = require("child_process");
 
 const PACKAGE_ROOT = path.resolve(__dirname, "..");
-const SITE_URL = "https://anansi.dev";
+const SITE_URL = "https://anansi-mauve.vercel.app";
 const DOCS_URL = "https://github.com/TheAlexYao/anansi-ai/tree/main/packages/anansi-ai#readme";
 const TEXT_EXTENSIONS = new Set([
   ".md",

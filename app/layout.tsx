@@ -6,7 +6,7 @@ const geist = Geist({ subsets: ["latin"], display: "swap", variable: "--font-gei
 const geistMono = Geist_Mono({ subsets: ["latin"], display: "swap", variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://anansi.dev"),
+  metadataBase: new URL("https://anansi-mauve.vercel.app"),
   title: "Anansi — the visual storytelling agent for Runway",
   description: "A creative producer for AI video. Five agents weave a 30-second film stakeholders take seriously. One install. Built for the Runway API hackathon.",
   icons: {
