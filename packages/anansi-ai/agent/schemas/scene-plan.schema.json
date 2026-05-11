@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AnansiScenePlan",
+  "type": "object",
+  "required": ["project", "creativeDirection", "scenes"],
+  "properties": {
+    "project": {
+      "type": "object",
+      "required": ["name", "summary", "audience", "desiredFeeling"],
+      "properties": {
+        "name": { "type": "string" },
+        "summary": { "type": "string" },
+        "audience": { "type": "string" },
+        "desiredFeeling": { "type": "string" }
+      }
+    },
+    "creativeDirection": {
+      "type": "object",
+      "required": ["concept", "palette", "visualRules"],
+      "properties": {
+        "concept": { "type": "string" },
+        "palette": { "type": "array", "items": { "type": "string" } },
+        "visualRules": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["id", "purpose", "durationSeconds", "shot", "cameraMovement", "runwayPrompt"],
+        "properties": {
+          "id": { "type": "string" },
+          "purpose": { "type": "string" },
+          "durationSeconds": { "type": "number" },
+          "shot": { "type": "string" },
+          "cameraMovement": { "type": "string" },
+          "transitionIntent": { "type": "string" },
+          "referenceImage": { "type": "string" },
+          "runwayPrompt": { "type": "string" },
+          "negativeNotes": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}
+

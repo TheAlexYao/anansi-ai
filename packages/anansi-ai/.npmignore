@@ -1,0 +1,12 @@
+.git/
+.github/
+node_modules/
+.env
+.env.*
+.DS_Store
+anansi-agent-vault/
+vault/
+Obsidian/
+.obsidian/
+scripts/check-public-package.js
+*.tgz

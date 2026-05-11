@@ -5128,3 +5128,19 @@ svg {
   max-height: 84vh;
   background: #05040c;
 }
+
+.docs-copy ul {
+  display: grid;
+  gap: 0.75rem;
+  line-height: 1.7;
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.docs-copy code {
+  border: 1px solid rgba(181, 155, 107, 0.35);
+  border-radius: 0.45rem;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.08rem 0.35rem;
+  color: #f6d58d;
+}
