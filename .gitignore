@@ -24,3 +24,6 @@ public/generated/runway/*
 tsconfig.tsbuildinfo
 
 public/brand/_history.jsonl
+
+# UI inspiration mockups (kept locally, not shipped)
+anansi-ui-*.png
