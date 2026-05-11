@@ -291,8 +291,8 @@ export default function Home() {
 
         <div className="media-row media-row-right">
           <PlayTile src={heroImages.lounge} />
+          <PlayTile src="/generated/runway/anansi/direction-02.png" />
           <PlayTile src={heroImages.skyline} />
-          <PlayTile src={heroImages.material} />
         </div>
 
         <footer className="hero-footer">
