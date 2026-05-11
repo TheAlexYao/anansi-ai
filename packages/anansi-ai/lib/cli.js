@@ -6,6 +6,8 @@ const path = require("path");
 const cp = require("child_process");
 
 const PACKAGE_ROOT = path.resolve(__dirname, "..");
+const SITE_URL = "https://anansi.dev";
+const DOCS_URL = "https://github.com/TheAlexYao/anansi-ai/tree/main/packages/anansi-ai#readme";
 const TEXT_EXTENSIONS = new Set([
   ".md",
   ".txt",
@@ -22,15 +24,16 @@ function usage() {
   return `Anansi
 
 Usage:
-  npx anansi-ai connect [--vault PATH] [--force]
+  npx anansi-ai connect [--vault PATH] [--open] [--force]
+  anansi-ai open [site|docs]
   anansi-ai doctor
   anansi-ai config get
   anansi-ai config set vault PATH
   anansi-ai config set runway_key KEY
 
 Notes:
-  - The Obsidian vault is never packaged or uploaded.
-  - connect installs public agent files and stores only a local vault path.
+  - connect installs the public Anansi runtime and skills locally.
+  - Optional vault paths stay on your machine and are never packaged or uploaded.
 `;
 }
 
@@ -42,6 +45,9 @@ async function run(args) {
   }
   if (command === "connect") {
     return connect(parseOptions(args.slice(1)));
+  }
+  if (command === "open") {
+    return openCommand(args.slice(1));
   }
   if (command === "doctor") {
     return doctor();
@@ -57,6 +63,8 @@ function parseOptions(args) {
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
     if (arg === "--force") options.force = true;
+    else if (arg === "--open") options.open = true;
+    else if (arg === "--no-open") options.open = false;
     else if (arg === "--dry-run") options.dryRun = true;
     else if (arg === "--vault") options.vaultPath = resolveHome(args[++i]);
     else if (arg === "--agent-home") options.agentHome = resolveHome(args[++i]);
@@ -117,11 +125,6 @@ function connect(options) {
     runwayKeyStorage: "macos-keychain:anansi-runway-api-key"
   };
 
-  if (!paths.vaultPath) {
-    console.log("No Anansi Obsidian vault detected. You can add it later:");
-    console.log("  anansi-ai config set vault /absolute/path/to/Anansi");
-  }
-
   if (!options.dryRun) saveConfig(config);
   fs.mkdirSync(paths.projectsDir, { recursive: true });
   fs.mkdirSync(paths.agentHome, { recursive: true });
@@ -132,8 +135,8 @@ function connect(options) {
     "{{ANANSI_PROJECTS_DIR}}": paths.projectsDir,
     "{{ANANSI_HERMES_PROFILE}}": paths.hermesProfile,
     "{{ANANSI_VAULT_PATH}}": paths.vaultPath || path.join(paths.configDir, "set-vault-path"),
-    "{{ANANSI_PUBLIC_REPO}}": "https://github.com/teambrukhman1/anansi-ai",
-    "{{ANANSI_PRIVATE_REPO}}": "private-local-only"
+    "{{ANANSI_PUBLIC_REPO}}": "https://github.com/TheAlexYao/anansi-ai",
+    "{{ANANSI_PRIVATE_REPO}}": "local-vault-only"
   };
 
   copyTemplateDir(path.join(PACKAGE_ROOT, "bundle", "agents"), path.join(paths.agentHome, "agents"), replacements, options);
@@ -153,14 +156,39 @@ function connect(options) {
   chmodScripts(path.join(paths.agentHome, "scripts"));
 
   console.log("Anansi connected.");
-  console.log(`Agent home: ${paths.agentHome}`);
-  console.log(`Projects:   ${paths.projectsDir}`);
-  console.log(`Skills:     ${paths.skillsRoot}`);
-  console.log(`Hermes:     ${paths.hermesProfile}`);
-  console.log(`Vault:      ${paths.vaultPath || "not set"}`);
+  console.log("");
+  console.log(`Installed skills: ${paths.skillsRoot}`);
+  console.log(`Agent runtime:    ${paths.agentHome}`);
+  console.log(`Projects:         ${paths.projectsDir}`);
+  console.log(`Hermes profile:   ${paths.hermesProfile}`);
   console.log("");
   console.log("Next:");
   console.log("  anansi-ai doctor");
+  console.log("  anansi-ai open site");
+  console.log("  anansi-ai config set vault /absolute/path/to/your/local/vault   # optional");
+  console.log("");
+  console.log(`Site: ${SITE_URL}`);
+  console.log(`Docs: ${DOCS_URL}`);
+
+  if (options.open) openUrl(SITE_URL);
+}
+
+function openCommand(args) {
+  const target = args[0] || "site";
+  if (target === "site") return openUrl(SITE_URL);
+  if (target === "docs") return openUrl(DOCS_URL);
+  throw new Error(`Unknown open target: ${target}\n\nUsage: anansi-ai open [site|docs]`);
+}
+
+function openUrl(url) {
+  const command = process.platform === "darwin" ? "open" : process.platform === "win32" ? "cmd" : "xdg-open";
+  const args = process.platform === "win32" ? ["/c", "start", "", url] : [url];
+  try {
+    cp.spawn(command, args, { detached: true, stdio: "ignore" }).unref();
+    console.log(`Opened ${url}`);
+  } catch (_error) {
+    console.log(url);
+  }
 }
 
 function doctor() {
