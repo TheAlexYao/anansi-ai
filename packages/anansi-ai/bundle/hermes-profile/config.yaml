@@ -1,0 +1,156 @@
+model:
+  default: gpt-5.5
+  provider: openai-codex
+  base_url: https://chatgpt.com/backend-api/codex
+
+terminal:
+  backend: local
+  cwd: {{ANANSI_AGENT_HOME}}
+  timeout: 180
+  docker_mount_cwd_to_workspace: false
+  lifetime_seconds: 180
+  container_cpu: 1
+  container_memory: 5120
+  container_disk: 51200
+  container_persistent: true
+
+browser:
+  inactivity_timeout: 120
+
+file_read_max_chars: 35000
+
+tool_output:
+  max_bytes: 12000
+  max_lines: 300
+  max_line_length: 800
+
+image_gen:
+  provider: openai-codex
+  use_gateway: false
+  openai-codex:
+    model: gpt-image-2-medium
+
+tool_loop_guardrails:
+  warnings_enabled: true
+  hard_stop_enabled: false
+  warn_after:
+    exact_failure: 2
+    teame_tool_failure: 3
+    idempotent_no_progress: 2
+  hard_stop_after:
+    exact_failure: 5
+    teame_tool_failure: 8
+    idempotent_no_progress: 5
+
+compression:
+  enabled: true
+  # Anansi runs long visual-production turns with image and file artifacts.
+  # Compress earlier, keep a smaller live tail, and preserve durable state in
+  # project files/Obsidian instead of dragging the entire chat forward.
+  threshold: 0.12
+  target_ratio: 0.05
+  protect_last_n: 2
+  hygiene_hard_message_limit: 48
+
+auxiliary:
+  compression:
+    provider: openai-codex
+    model: gpt-5.4-mini
+    timeout: 300
+    extra_body: {}
+
+prompt_caching:
+  cache_ttl: 5m
+
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+  memory_char_limit: 2200
+  user_char_limit: 1375
+  nudge_interval: 0
+  flush_min_turns: 6
+
+session_reset:
+  mode: both
+  idle_minutes: 1440
+  at_hour: 4
+
+group_sessions_per_user: true
+
+streaming:
+  enabled: false
+
+skills:
+  creation_nudge_interval: 0
+
+agent:
+  max_turns: 60
+  gateway_timeout: 1800
+  gateway_timeout_warning: 240
+  gateway_auto_continue_freshness: 3600
+  restart_drain_timeout: 1200
+  verbose: false
+  reasoning_effort: medium
+
+platform_toolsets:
+  cli:
+    - hermes-cli
+  telegram:
+    - terminal
+    - file
+    - web
+    - vision
+    - image_gen
+    - skills
+    - todo
+    - code_execution
+    - cronjob
+    - messaging
+  discord:
+    - hermes-discord
+  whatsapp:
+    - hermes-whatsapp
+  slack:
+    - hermes-slack
+  signal:
+    - hermes-signal
+  homeassistant:
+    - hermes-homeassistant
+  qqbot:
+    - hermes-qqbot
+  yuanbao:
+    - hermes-yuanbao
+  teams:
+    - hermes-teams
+
+stt:
+  enabled: true
+  local:
+    model: base
+  openai:
+    model: whisper-1
+
+code_execution:
+  timeout: 180
+  max_tool_calls: 50
+
+delegation:
+  max_iterations: 50
+
+goals:
+  max_turns: 50
+
+display:
+  compact: true
+  tool_progress: "off"
+  interim_assistant_messages: false
+  busy_input_mode: queue
+  background_process_notifications: error
+  bell_on_complete: false
+  show_reasoning: false
+  streaming: true
+  skin: default
+  platforms:
+    telegram:
+      tool_progress: "off"
+      interim_assistant_messages: false

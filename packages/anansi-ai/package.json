@@ -1,0 +1,46 @@
+{
+  "name": "anansi-ai",
+  "version": "0.1.0",
+  "description": "Agent-first visual storytelling installer for Anansi.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheAlexYao/anansi-ai.git",
+    "directory": "packages/anansi-ai"
+  },
+  "homepage": "https://github.com/TheAlexYao/anansi-ai/tree/main/packages/anansi-ai#readme",
+  "bugs": {
+    "url": "https://github.com/TheAlexYao/anansi-ai/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "anansi-ai": "bin/anansi-ai.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "bundle/",
+    "agent/",
+    "data/",
+    "docs/",
+    "README.md",
+    "LICENSE",
+    "PUBLIC_PACKAGE_MANIFEST.md"
+  ],
+  "scripts": {
+    "prepack": "node scripts/check-public-package.js",
+    "doctor": "node bin/anansi-ai.js doctor"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "anansi",
+    "runway",
+    "agent",
+    "video",
+    "storytelling"
+  ]
+}

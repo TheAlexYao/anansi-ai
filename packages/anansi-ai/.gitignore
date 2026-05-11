@@ -1,0 +1,13 @@
+node_modules/
+*.log
+.env
+.env.*
+.DS_Store
+npm-debug.log*
+anansi-agent-vault/
+vault/
+Obsidian/
+.obsidian/
+dist/
+coverage/
+*.tgz

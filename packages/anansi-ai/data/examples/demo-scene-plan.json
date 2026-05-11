@@ -1,0 +1,62 @@
+{
+  "project": {
+    "name": "Demo Residence",
+    "summary": "A modern architectural home presented as a serene, cinematic lifestyle destination.",
+    "audience": "Design-conscious buyers who value privacy, light, and atmosphere.",
+    "desiredFeeling": "Quiet luxury, arrival, warmth, and architectural calm."
+  },
+  "creativeDirection": {
+    "concept": "A vertical architectural short that moves from arrival to interior calm to sunset atmosphere.",
+    "palette": ["warm stone", "soft white", "deep green", "brushed bronze", "late golden light"],
+    "visualRules": [
+      "Natural cinematic lighting",
+      "Slow controlled camera movement",
+      "Premium architectural photography style",
+      "No exaggerated fantasy architecture",
+      "Consistent material palette across scenes"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene-01-arrival",
+      "purpose": "Establish the property as private and cinematic.",
+      "durationSeconds": 7,
+      "shot": "Wide exterior arrival shot",
+      "cameraMovement": "Slow forward dolly toward the entrance",
+      "transitionIntent": "End near the doorway for a natural move inside.",
+      "referenceImage": "public/demo-assets/reference-arrival.png",
+      "runwayPrompt": "The camera slowly dollies forward along the stone path toward the entrance. Late afternoon light moves gently across the facade, leaves shift subtly in a light breeze, and the shot remains smooth, composed, and architectural."
+    },
+    {
+      "id": "scene-02-interior",
+      "purpose": "Reveal the emotional center of the home.",
+      "durationSeconds": 7,
+      "shot": "Interior living room reveal",
+      "cameraMovement": "Slow lateral glide from doorway into the room",
+      "transitionIntent": "End facing the window wall.",
+      "referenceImage": "public/demo-assets/reference-interior.png",
+      "runwayPrompt": "The camera glides slowly from the doorway into the living room, revealing warm stone, soft textiles, and sunlight across the floor. Sheer curtains move slightly, reflections shift on glass, and the movement feels quiet, precise, and cinematic."
+    },
+    {
+      "id": "scene-03-detail",
+      "purpose": "Show tactile luxury and material quality.",
+      "durationSeconds": 6,
+      "shot": "Close architectural material detail",
+      "cameraMovement": "Slow macro push across stone, wood, and bronze finishes",
+      "transitionIntent": "Use texture as visual bridge to the terrace.",
+      "referenceImage": "public/demo-assets/reference-detail.png",
+      "runwayPrompt": "A slow macro camera push travels across honed stone, warm wood grain, and brushed bronze hardware. Light rolls softly over the surfaces, revealing texture and craftsmanship with minimal motion and shallow focus."
+    },
+    {
+      "id": "scene-04-sunset",
+      "purpose": "Conclude with lifestyle atmosphere and final emotional payoff.",
+      "durationSeconds": 8,
+      "shot": "Terrace at sunset",
+      "cameraMovement": "Slow pullback from terrace seating toward the full exterior view",
+      "transitionIntent": "Final hero ending.",
+      "referenceImage": "public/demo-assets/reference-sunset.png",
+      "runwayPrompt": "The camera slowly pulls back from the terrace seating as sunset light deepens across the home. Pool reflections shimmer gently, warm interior lights begin to glow, and the scene settles into a calm luxury evening atmosphere."
+    }
+  ]
+}
+
