@@ -5059,3 +5059,72 @@ svg {
 .final-film video {
   z-index: 1;
 }
+
+.final-film {
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.final-film-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border: 2px solid rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  background: rgba(7, 6, 16, 0.58);
+  transform: translate(-50%, -50%);
+}
+
+.final-film-play svg {
+  width: 24px;
+  height: 24px;
+  fill: rgba(255, 255, 255, 0.9);
+  stroke: none;
+}
+
+.landing-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(3, 2, 10, 0.9);
+  backdrop-filter: blur(14px);
+}
+
+.landing-video-modal__panel {
+  position: relative;
+  width: min(1180px, 94vw);
+  border: 1px solid rgba(181, 154, 255, 0.28);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #05040c;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.58);
+}
+
+.landing-video-modal__panel > button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  padding: 8px 12px;
+  border: 1px solid rgba(251, 248, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(8, 6, 18, 0.74);
+  color: #fff;
+  cursor: pointer;
+}
+
+.landing-video-modal__panel video {
+  display: block;
+  width: 100%;
+  max-height: 84vh;
+  background: #05040c;
+}
