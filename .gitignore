@@ -21,3 +21,4 @@ public/generated/runway/*
 # codex review artifacts
 .codex-screenshots/
 .vercel
+tsconfig.tsbuildinfo
