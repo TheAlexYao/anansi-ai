@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -92,21 +92,44 @@ function ImageTile({ src, label, large = false }: { src: string; label?: string;
   );
 }
 
-function PlayTile({ src }: { src: string }) {
+function PlayTile({ src, onPlay }: { src: string; onPlay?: () => void }) {
   const isVideo = src.endsWith(".mp4") || src.endsWith(".webm");
 
   return (
     <div className="play-tile" style={{ "--tile-image": `url(${src})` } as CSSProperties}>
       {isVideo ? <video src={src} muted loop playsInline autoPlay preload="metadata" /> : null}
-      <button aria-label="Play clip">
+      <button type="button" aria-label="Play clip" onClick={onPlay}>
         <PlayIcon />
       </button>
     </div>
   );
 }
 
+function LandingVideoModal({ open, src, onClose }: { open: boolean; src: string; onClose: () => void }) {
+  useEffect(() => {
+    if (!open) return;
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div className="landing-video-modal" role="dialog" aria-modal="true" aria-label="Final output video" onClick={onClose}>
+      <div className="landing-video-modal__panel" onClick={(event) => event.stopPropagation()}>
+        <button type="button" onClick={onClose}>Close</button>
+        <video src={src} controls autoPlay playsInline />
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [installOpen, setInstallOpen] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
 
   return (
     <main className="clone-page">
@@ -255,20 +278,21 @@ export default function Home() {
 
         <div className="video-dash video-dash-left" aria-hidden="true" />
 
-        <div className="final-film" style={{ "--tile-image": `url(${heroImages.residence})` } as CSSProperties}>
+        <button type="button" className="final-film" style={{ "--tile-image": `url(${heroImages.residence})` } as CSSProperties} onClick={() => setVideoOpen(true)} aria-label="Play final output video">
           <video src={heroImages.finalVideo} muted loop playsInline autoPlay preload="metadata" />
+          <span className="final-film-play"><PlayIcon /></span>
           <div className="film-toolbar">
             <span>07</span><b>Final output</b>
             <em>1:19</em><i>16:9</i>
           </div>
-        </div>
+        </button>
 
         <div className="video-dash video-dash-right" aria-hidden="true" />
 
         <div className="media-row media-row-right">
           <PlayTile src={heroImages.lounge} />
           <PlayTile src={heroImages.skyline} />
-          <PlayTile src={heroImages.finalVideo} />
+          <PlayTile src={heroImages.finalVideo} onPlay={() => setVideoOpen(true)} />
         </div>
 
         <footer className="hero-footer">
@@ -285,6 +309,7 @@ export default function Home() {
         </footer>
       </section>
       <InstallPopup open={installOpen} onClose={() => setInstallOpen(false)} />
+      <LandingVideoModal open={videoOpen} src={heroImages.finalVideo} onClose={() => setVideoOpen(false)} />
     </main>
   );
 }
