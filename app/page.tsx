@@ -18,6 +18,12 @@ import { InstallPopup } from "./components/InstallPopup";
 const heroImages = {
   finalVideo: "/generated/runway/anansi/final-output.mp4",
   residence: "/generated/runway/anansi/direction-selected-route-1.png",
+  shot1a: "/generated/runway/anansi/shots-1a.mp4",
+  shot1b: "/generated/runway/anansi/shots-1b.mp4",
+  shot2a: "/generated/runway/anansi/shots-2a.mp4",
+  shot2b: "/generated/runway/anansi/shots-2b.mp4",
+  shot3a: "/generated/runway/anansi/shots-3a.mp4",
+  shot3b: "/generated/runway/anansi/shots-3b.mp4",
   exterior: "/generated/runway/anansi/brief-path-through-cedars.png",
   interior: "/generated/runway/anansi/brief-rain-on-glass.png",
   material: "/generated/runway/anansi/brief-cabin-at-first-light.png",
@@ -271,9 +277,9 @@ export default function Home() {
         </div>
 
         <div className="media-row media-row-left">
-          <PlayTile src={heroImages.exterior} />
-          <PlayTile src={heroImages.interior} />
-          <PlayTile src={heroImages.material} />
+          <PlayTile src={heroImages.shot1a} />
+          <PlayTile src={heroImages.shot1b} />
+          <PlayTile src={heroImages.shot2a} />
         </div>
 
         <div className="video-dash video-dash-left" aria-hidden="true" />
@@ -290,9 +296,9 @@ export default function Home() {
         <div className="video-dash video-dash-right" aria-hidden="true" />
 
         <div className="media-row media-row-right">
-          <PlayTile src={heroImages.lounge} />
-          <PlayTile src="/generated/runway/anansi/direction-02.png" />
-          <PlayTile src={heroImages.skyline} />
+          <PlayTile src={heroImages.shot2b} />
+          <PlayTile src={heroImages.shot3a} />
+          <PlayTile src={heroImages.shot3b} />
         </div>
 
         <footer className="hero-footer">
